@@ -19,6 +19,7 @@ FLAGS = -Wall -Werror -Wextra
 
 # FILES
 NAME = libft_malloc_$(HOSTTYPE).so
+SYMLINK = libft_malloc.so
 OBJS = $(SRC:.c=.o)
 O2 = $(addprefix $(OPATH), $(OBJS))
 
@@ -40,6 +41,8 @@ $(NAME): $(LIB) $(O2)
 	@ar rc $(NAME) $(O2)
 	@ranlib $(NAME)
 	@echo "\033[0;32m$(NAME) compilation done !\033[0;m"
+	@ln -s $(SYMLINK) $@
+	@echo "\033[0;32m$(SYMLINK) symbolic link created !\033[0;m"
 
 $(LIB):
 	@echo "\033[0;32mWaiting, libft is in compilation...\033[0;m"
