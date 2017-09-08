@@ -3,6 +3,10 @@
 
 # Libraries
 *.a
+*.so
+
+# Executables
+*.out
 
 # Debug files
 *.dSYM/
