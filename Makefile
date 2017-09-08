@@ -6,13 +6,15 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/09/07 19:56:30 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/09/08 17:48:20 by flav             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # FILES
-SRC = malloc.c \
-	  alloc_handling.c
+SRC = alloc_handling.c \
+	get_infos.c \
+	malloc.c
+
 NAME = libft_malloc_$(HOSTTYPE).so
 SYMLINK = libft_malloc.so
 OBJS = $(SRC:.c=.o)

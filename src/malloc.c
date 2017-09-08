@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/07 19:55:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/08 17:54:08 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_zone					*create_alloc_zone(t_zone **zone_lst, size_t size)
 		MAP_ANON | MAP_SHARED, -1, 0)) == MAP_FAILED)
 		return (NULL);
 	ft_printf("Address allocated : %x, size : %zu\n", new, size);
-	new->size = size;
+	new->type = get_zone_type(size);
+	new->size = 0;
 	new->block_lst = NULL;
 	new->next = NULL;
 	if ((tmp = *zone_lst) != NULL)
@@ -38,16 +39,17 @@ t_zone					*create_alloc_zone(t_zone **zone_lst, size_t size)
 
 void				*ft_malloc(size_t size)
 {
-	static 	t_zone *begin_zone = NULL;
-	// t_block	*alloc_block;
+	static t_zone	*begin = NULL;
+	void			*ptr;
 
-	ft_printf("ft_malloc called for %zu bytes\n", size);
-	if (!begin_zone)
+	ft_printf("ft_malloc called for %zu bytes\nMETA_SIZE : %zu\nMAX_ALLOC_SIZE : to define..\n", size, META_SIZE);
+	if (!begin)
 	{
-		if (!(create_alloc_zone(&begin_zone, TINY_SIZE)))
+		if (!(create_alloc_zone(&begin, TINY_SIZE)))
 			return (NULL);
-		if (!(create_alloc_zone(&begin_zone, SMALL_SIZE)))
+		if (!(create_alloc_zone(&begin, SMALL_SIZE)))
 			return (NULL);
 	}
-	return ((void*)42);
+	ptr = get_allocated_ptr(begin, size + META_SIZE);
+	return ((void*)free_block);
 }

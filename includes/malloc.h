@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/07 18:35:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/08 18:21:45 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,23 @@
 
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
 
-# define TINY_MAX_ALLOC (size_t)(getpagesize() / 4)
-# define TINY_SIZE (size_t)(getpagesize() * 488)
-# define SMALL_MAX_ALLOC (size_t)(getpagesize() * 31)
-# define SMALL_SIZE (size_t)(getpagesize() * 3906)
+# define META_SIZE sizeof(t_block)
 
-// typedef enum 		e_zone_type
-// {
-// 	TINY,
-// 	SMALL,
-// 	LARGE
-// }					t_zone_type;
+# define TINY_SIZE (size_t)(getpagesize() * 488)
+# define TINY_MAX_ALLOC (size_t)(getpagesize() / 4)
+# define SMALL_SIZE (size_t)(getpagesize() * 3906)
+# define SMALL_MAX_ALLOC (size_t)(getpagesize() * 31)
+
+typedef enum 		e_size_type
+{
+	TINY,
+	SMALL,
+	LARGE
+}					t_size_type;
 
 typedef struct		s_block
 {
 	size_t			size;
-	void			*data;
 	int				is_free;
 	struct s_block	*prev;
 	struct s_block	*next;
@@ -41,7 +42,7 @@ typedef struct		s_block
 
 typedef struct		s_zone
 {
-	// t_zone_type		zone_type;
+	t_size_type		type;
 	size_t			size;
 	t_block			*block_lst;
 	struct s_zone	*next;
@@ -49,6 +50,10 @@ typedef struct		s_zone
 
 void				*ft_malloc(size_t size);
 t_zone				*create_alloc_zone(t_zone **zone_lst, size_t size);
-// int					get_zone_type(size_t size);
+void				*get_allocated_ptr(t_zone *begin, size_t size);
+
+t_size_type	get_zone_type(size_t size);
+t_size_type	get_block_type(size_t size);
+size_t		get_zone_size(t_zone *zone);
 
 #endif
