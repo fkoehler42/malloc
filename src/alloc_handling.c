@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alloc_zones_handling.c                             :+:      :+:    :+:   */
+/*   alloc_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_malloc.h"
+#include "malloc.h"
 
-int		get_zone_type(size_t size)
-{
-	if (size <= TINY_BLOCK_MAX_SIZE)
-		return (TINY);
-	else if (size <= SMALL_BLOCK_MAX_SIZE)
-		return (SMALL);
-	else
-		return (LARGE);
-}
+// t_zone_type	get_zone_type(size_t size)
+// {
+// 	if (size <= TINY_BLOCK_MAX_SIZE)
+// 		return (TINY);
+// 	else if (size <= SMALL_BLOCK_MAX_SIZE)
+// 		return (SMALL);
+// 	else
+// 		return (LARGE);
+// }
