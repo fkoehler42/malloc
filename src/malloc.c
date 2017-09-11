@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/08 17:54:08 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/11 13:29:58 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_zone					*create_alloc_zone(t_zone **zone_lst, size_t size)
 	t_zone	*new;
 	t_zone	*tmp;
 
-	if ((new = mmap(0, size, PROT_READ | PROT_WRITE,
+	if ((new = mmap(0, size + META_ZONE_SIZE, PROT_READ | PROT_WRITE,
 		MAP_ANON | MAP_SHARED, -1, 0)) == MAP_FAILED)
 		return (NULL);
 	ft_printf("Address allocated : %x, size : %zu\n", new, size);
@@ -50,6 +50,6 @@ void				*ft_malloc(size_t size)
 		if (!(create_alloc_zone(&begin, SMALL_SIZE)))
 			return (NULL);
 	}
-	ptr = get_allocated_ptr(begin, size + META_SIZE);
+	ptr = get_allocated_ptr(begin, size);
 	return ((void*)free_block);
 }

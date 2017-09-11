@@ -6,7 +6,7 @@
 /*   By: flav <flav@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 17:22:05 by flav              #+#    #+#             */
-/*   Updated: 2017/09/08 18:21:06 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/11 15:11:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ t_size_type	get_zone_type(size_t size)
 		return (LARGE);
 }
 
-size_t		get_zone_size(t_zone *zone)
+size_t		get_zone_size(t_size_type type)
 {
-	if (zone->type == TINY)
+	if (type == TINY)
 		return (TINY_SIZE);
-	else if (zone->type == SMALL)
+	else if (type == SMALL)
 		return (SMALL_SIZE);
-	else
-		return (zone->size);
+	return (0);
 }
 
 t_size_type	get_block_type(size_t size)
@@ -40,4 +39,18 @@ t_size_type	get_block_type(size_t size)
 		return (SMALL);
 	else
 		return (LARGE);
+}
+
+size_t		get_rounded_block_size(size_t size)
+{
+	size_t	alloc_resolution;
+	size_t	max_alloc;
+
+	if (size <= TINY_MAX_ALLOC && ())
+		alloc_resolution = TINY_RESOLUTION;
+	else if (size <= SMALL_MAX_ALLOC)
+		alloc_resolution = SMALL_RESOLUTION;
+	else
+		alloc_resolution = LARGE_RESOLUTION;
+
 }

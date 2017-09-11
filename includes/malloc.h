@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/08 18:21:45 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/11 15:09:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@
 
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
 
-# define META_SIZE sizeof(t_block)
+# define META_BLOCK_SIZE sizeof(t_block)
+# define META_ZONE_SIZE sizeof(t_zone)
 
 # define TINY_SIZE (size_t)(getpagesize() * 488)
 # define TINY_MAX_ALLOC (size_t)(getpagesize() / 4)
+# define TINY_RESOLUTION 16
 # define SMALL_SIZE (size_t)(getpagesize() * 3906)
 # define SMALL_MAX_ALLOC (size_t)(getpagesize() * 31)
-
+# define SMALL_RESOLUTION 512
+# define LARGE_RESOLUTION 4096
 typedef enum 		e_size_type
 {
 	TINY,
@@ -55,5 +58,6 @@ void				*get_allocated_ptr(t_zone *begin, size_t size);
 t_size_type	get_zone_type(size_t size);
 t_size_type	get_block_type(size_t size);
 size_t		get_zone_size(t_zone *zone);
+size_t		get_rounded_block_size(size_t size);
 
 #endif
