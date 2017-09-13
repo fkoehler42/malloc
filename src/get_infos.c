@@ -6,7 +6,7 @@
 /*   By: flav <flav@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 17:22:05 by flav              #+#    #+#             */
-/*   Updated: 2017/09/12 18:32:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/13 19:57:58 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@ t_size_type	get_zone_type(size_t size)
 	else
 		return (LARGE);
 }
-
 /*
 ** Does not handle large type zone
 */
-size_t		get_zone_type_size(t_size_type type)
+size_t		get_zone_total_size(t_size_type type)
 {
 	if (type == TINY)
-		return (TINY_SIZE);
+		return (TINY_SIZE - META_ZONE_SIZE);
 	else if (type == SMALL)
-		return (SMALL_SIZE);
+		return (SMALL_SIZE - META_ZONE_SIZE);
 	return (0);
 }
 
@@ -42,6 +41,19 @@ t_size_type	get_block_type(size_t size)
 		return (SMALL);
 	else
 		return (LARGE);
+}
+
+size_t		get_min_block_size(t_size_type type)
+{
+	size_t	min_alloc;
+
+	if (type == TINY)
+		min_alloc = 1;
+	else if (type == SMALL)
+		min_alloc = TINY_MAX_ALLOC + 1;
+	else
+		min_alloc = SMALL_MAX_ALLOC + 1;
+	return (get_rounded_block_size(min_alloc) + META_BLOCK_SIZE);
 }
 
 size_t		get_rounded_block_size(size_t size)

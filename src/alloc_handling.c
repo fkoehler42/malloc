@@ -6,27 +6,47 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/12 18:34:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/13 22:16:51 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static t_block	*get_free_block(t_zone *zone, size_t block_size)
+static t_block	*alloc_new_block(t_zone *zone, t_block *free_block, size_t size)
+{
+	size_t	min_block_size;
+	t_block	*new_block;
+
+	min_block_size = get_min_block_size(zone->type);
+	if (free_block->size == size || free_block->size < (size + min_block_size))
+	{
+		new_block = free_block;
+		zone->size += size;
+	}
+	else
+	{
+		new_block = split_and_add_block(free_block, size);
+		zone->size += (size + META_BLOCK_SIZE);
+	}
+	new_block->is_free = 0;
+	return (new_block);
+}
+
+static t_block	*get_free_block(t_zone *zone, size_t size)
 {
 	t_block	*block;
 
 	block = zone->block_lst;
 	while (block)
 	{
-		if (block->is_free && block->size >= block_size)
+		if (block->is_free && block->size >= size)
 			return (block);
 		block = block->next;
 	}
 	return (NULL);
 }
 
-t_block			*find_free_block(size_t block_size, t_size_type block_type)
+t_block			*find_free_block(size_t size, t_size_type block_type)
 {
 	t_block	*free_block;
 	t_zone	*zone;
@@ -37,34 +57,32 @@ t_block			*find_free_block(size_t block_size, t_size_type block_type)
 	{
 		if (zone->type == block_type)
 		{
-			if (((get_zone_type_size(zone->type) - zone->size) >= block_size)
-			&& (free_block = get_free_block(zone, block_size)))
-				return (free_block);
+			if (((get_zone_total_size(zone->type) - zone->size) >= size)
+			&& (free_block = get_free_block(zone, size)))
+				return (alloc_new_block(zone, free_block, size));
 		}
 		zone = zone->next;
 	}
 	return (NULL);
 }
 
-void			*get_allocated_ptr(size_t block_size)
+void			*get_allocated_ptr(size_t size)
 {
 	t_size_type	block_type;
-	t_block		*free_block;
-	t_zone		*new;
+	t_block		*alloc_block;
+	t_zone		*new_zone;
 
-	free_block = NULL;
-	new = NULL;
-	block_size = get_rounded_block_size(block_size);
-	ft_printf("Rounded block size %zu\n", block_size);
-	if ((block_type = get_block_type(block_size)) == LARGE)
-		new = create_alloc_zone(block_size);
-	else
-	{
-		if (!(free_block = find_free_block(block_size, block_type)))
-			new = create_alloc_zone(get_zone_type_size(block_type));
-	}
-	if (new)return (NULL);
-	else if (!free_block)
+	alloc_block = NULL;
+	new_zone = NULL;
+	size = get_rounded_block_size(size);
+	ft_printf("Rounded block size %zu\n", size);
+	if ((block_type = get_block_type(size)) == LARGE)
+		new_zone = create_alloc_zone(size);
+	else if (!(alloc_block = find_free_block(size, block_type)))
+		new_zone = create_alloc_zone(get_zone_total_size(block_type) + META_ZONE_SIZE);
+	if (new_zone)
+		alloc_block = alloc_new_block(new_zone, new_zone->block_lst, size);
+	if (!alloc_block)
 		return (NULL);
-	return (free_block + META_BLOCK_SIZE);
+	return ((void*)alloc_block + META_BLOCK_SIZE + 1);
 }

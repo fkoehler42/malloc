@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/12 18:42:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/13 22:25:14 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 # define TINY_SIZE (size_t)(getpagesize() * 488)
 # define TINY_MAX_ALLOC (size_t)(getpagesize() / 4) - META_BLOCK_SIZE
 # define TINY_RESOLUTION 16
+
 # define SMALL_SIZE (size_t)(getpagesize() * 3906)
 # define SMALL_MAX_ALLOC (size_t)(getpagesize() * 31) - META_BLOCK_SIZE
 # define SMALL_RESOLUTION 512
+
 # define LARGE_RESOLUTION 4096
 
 typedef enum 		e_size_type
@@ -47,7 +49,8 @@ typedef struct		s_block
 typedef struct		s_zone
 {
 	t_size_type		type;
-	size_t			size; // nb_blocks * (block->size + META_BLOCK_SIZE)
+// full_blocks * (block->size + META_BLOCK_SIZE) + free_blocks * META_BLOCK_SIZE
+	size_t			size;
 	t_block			*block_lst;
 	struct s_zone	*next;
 }					t_zone;
@@ -58,9 +61,12 @@ void				*ft_malloc(size_t size);
 t_zone				*create_alloc_zone(size_t size);
 void				*get_allocated_ptr(size_t size);
 
+t_block				*split_and_add_block(t_block *block, size_t size);
+
 t_size_type			get_zone_type(size_t size);
 t_size_type			get_block_type(size_t size);
-size_t				get_zone_type_size(t_size_type type);
+size_t				get_zone_total_size(t_size_type type);
+size_t				get_min_block_size(t_size_type type);
 size_t				get_rounded_block_size(size_t size);
 
 #endif

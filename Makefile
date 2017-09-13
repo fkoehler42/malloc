@@ -6,12 +6,13 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/09/08 17:48:20 by flav             ###   ########.fr        #
+#    Updated: 2017/09/13 20:49:54 by flav             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # FILES
 SRC = alloc_handling.c \
+	block_lst.c \
 	get_infos.c \
 	malloc.c
 
