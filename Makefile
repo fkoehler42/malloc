@@ -6,15 +6,16 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/09/13 20:49:54 by flav             ###   ########.fr        #
+#    Updated: 2017/09/14 15:00:02 by flav             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # FILES
-SRC = alloc_handling.c \
-	block_lst.c \
+SRC = allocation.c \
+	blocks.c \
 	get_infos.c \
-	malloc.c
+	malloc.c \
+	zones.c
 
 NAME = libft_malloc_$(HOSTTYPE).so
 SYMLINK = libft_malloc.so

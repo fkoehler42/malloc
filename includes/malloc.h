@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/13 22:25:14 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/14 15:56:07 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
 
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
 
+# define PAGE_SIZE getpagesize()
+# define MAX_ALLOC_SIZE (size_t)-1 - (2 * PAGE_SIZE)
+
 # define META_BLOCK_SIZE sizeof(t_block)
 # define META_ZONE_SIZE sizeof(t_zone)
 
-# define TINY_SIZE (size_t)(getpagesize() * 488)
-# define TINY_MAX_ALLOC (size_t)(getpagesize() / 4) - META_BLOCK_SIZE
+# define TINY_SIZE (size_t)(PAGE_SIZE * 488)
+# define TINY_MAX_ALLOC (size_t)(PAGE_SIZE / 4) - META_BLOCK_SIZE
 # define TINY_RESOLUTION 16
 
-# define SMALL_SIZE (size_t)(getpagesize() * 3906)
-# define SMALL_MAX_ALLOC (size_t)(getpagesize() * 31) - META_BLOCK_SIZE
+# define SMALL_SIZE (size_t)(PAGE_SIZE * 3906)
+# define SMALL_MAX_ALLOC (size_t)(PAGE_SIZE * 31) - META_BLOCK_SIZE
 # define SMALL_RESOLUTION 512
 
 # define LARGE_RESOLUTION 4096
@@ -58,7 +61,8 @@ typedef struct		s_zone
 t_zone				*g_alloc_start;
 
 void				*ft_malloc(size_t size);
-t_zone				*create_alloc_zone(size_t size);
+
+t_zone				*create_zone(size_t size);
 void				*get_allocated_ptr(size_t size);
 
 t_block				*split_and_add_block(t_block *block, size_t size);
