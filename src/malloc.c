@@ -6,13 +6,27 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/14 15:57:20 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/18 19:05:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void				*ft_malloc(size_t size)
+void 		ft_free(void *ptr)
+{
+	t_zone	*zone;
+
+	if (ptr != NULL && (zone = get_ptr_zone(ptr)) != NULL)
+	{
+		// ft_printf("\nfree called on ptr %p, found in range of zone %p !\n", ptr, zone);
+		if (deallocate_ptr(ptr, zone) == -1){}
+			//print error msg
+	}
+	else;
+		//print error msg
+}
+
+void		*ft_malloc(size_t size)
 {
 	void			*ptr;
 

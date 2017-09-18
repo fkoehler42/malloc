@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/14 15:56:07 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/18 18:38:19 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,23 @@ typedef struct		s_zone
 // full_blocks * (block->size + META_BLOCK_SIZE) + free_blocks * META_BLOCK_SIZE
 	size_t			size;
 	t_block			*block_lst;
+	struct s_zone	*prev;
 	struct s_zone	*next;
 }					t_zone;
 
 t_zone				*g_alloc_start;
 
 void				*ft_malloc(size_t size);
+void 				ft_free(void *ptr);
 
-t_zone				*create_zone(size_t size);
 void				*get_allocated_ptr(size_t size);
+int 				deallocate_ptr(void *ptr, t_zone *zone);
 
+t_zone				*get_ptr_zone(void *ptr);
+t_zone				*create_zone(size_t size);
+int					delete_zone(t_zone *zone);
 t_block				*split_and_add_block(t_block *block, size_t size);
+void 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
 
 t_size_type			get_zone_type(size_t size);
 t_size_type			get_block_type(size_t size);

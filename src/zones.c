@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/14 17:39:21 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/18 17:44:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void 		init_zone(t_zone *zone, size_t size)
 	zone->type = get_zone_type(size);
 	zone->size = META_ZONE_SIZE + META_BLOCK_SIZE;
 	zone->block_lst = first_block;
+	zone->prev = NULL;
 	zone->next = NULL;
 }
 
@@ -46,6 +47,29 @@ t_zone				*create_zone(size_t size)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
+		new->prev = tmp;
 	}
 	return (new);
+}
+
+int 			delete_zone(t_zone *zone)
+{
+	t_zone	*prev;
+	t_zone	*next;
+
+	prev = zone->prev;
+	next = zone->next;
+	if (munmap(zone, zone->size + META_ZONE_SIZE + META_BLOCK_SIZE) < 0)
+		return (-1);
+	if (!prev)
+	{
+		g_alloc_start = next;
+		g_alloc_start->prev = NULL;
+	}
+	else
+	{
+		prev->next = next;
+		next->prev = prev;
+	}
+	return (0);
 }

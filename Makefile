@@ -6,13 +6,14 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/09/14 15:00:02 by flav             ###   ########.fr        #
+#    Updated: 2017/09/18 12:04:47 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # FILES
 SRC = allocation.c \
 	blocks.c \
+	deallocation.c \
 	get_infos.c \
 	malloc.c \
 	zones.c
