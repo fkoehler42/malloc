@@ -6,13 +6,14 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/19 11:26:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/19 12:51:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+#include <libft.h>
 
-void 		ft_free(void *ptr)
+void		ft_free(void *ptr)
 {
 	t_zone	*zone;
 
@@ -24,6 +25,17 @@ void 		ft_free(void *ptr)
 	}
 	else;
 		//print error msg
+}
+
+void		*ft_calloc(size_t count, size_t size)
+{
+	void 	*ptr;
+	size_t	length;
+
+	length = count * size;
+	if (!(ptr = ft_malloc(length)))
+		return (NULL);
+	return (ft_memset(ptr, 0, length));
 }
 
 void		*ft_malloc(size_t size)

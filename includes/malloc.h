@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/19 11:59:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/19 13:06:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct		s_zone
 t_zone				*g_alloc_start;
 
 void				*ft_malloc(size_t size);
+void				*ft_calloc(size_t count, size_t size);
 void 				ft_free(void *ptr);
 
 void				*get_allocated_ptr(size_t size);

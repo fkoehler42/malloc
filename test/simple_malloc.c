@@ -5,7 +5,9 @@
 
 int main()
 {
-	char	*s = ft_malloc(42);
-	s[0] = 42;
+	char *str;
+
+	str = ft_malloc(42);
+	str[0] = 42;
 	return 0;
 }
