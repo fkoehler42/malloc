@@ -38,7 +38,7 @@ t_zone				*create_zone(size_t size)
 	if ((new = mmap(0, size, PROT_READ | PROT_WRITE,
 		MAP_ANON | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 		return (NULL);
-	ft_printf("New zone allocated : %p, size : %zu\n", new, size);
+	ft_printf("New zone allocated : %p\n", new);
 	init_zone(new, size);
 	if (!(tmp = g_alloc_start))
 		g_alloc_start = new;
@@ -59,12 +59,14 @@ int 			delete_zone(t_zone *zone)
 
 	prev = zone->prev;
 	next = zone->next;
+	ft_printf("Zone deallocated : %p\n", zone);
 	if (munmap(zone, zone->size + META_ZONE_SIZE + META_BLOCK_SIZE) < 0)
 		return (-1);
 	if (!prev)
 	{
 		g_alloc_start = next;
-		g_alloc_start->prev = NULL;
+		if (g_alloc_start)
+			g_alloc_start->prev = NULL;
 	}
 	else
 	{

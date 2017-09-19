@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/19 11:37:56 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/19 11:59:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 # define META_BLOCK_SIZE sizeof(t_block)
 # define META_ZONE_SIZE sizeof(t_zone)
 
-# define TINY_SIZE (size_t)(PAGE_SIZE * 244)
-# define TINY_MAX_ALLOC (size_t)(PAGE_SIZE / 2) - META_BLOCK_SIZE
+# define TINY_SIZE (size_t)(PAGE_SIZE * 100)
+# define TINY_MAX_ALLOC (size_t)(PAGE_SIZE / 4) - META_BLOCK_SIZE
 # define TINY_RESOLUTION 16
 
-# define SMALL_SIZE (size_t)(PAGE_SIZE * 1953)
+# define SMALL_SIZE (size_t)(PAGE_SIZE * 1700)
 # define SMALL_MAX_ALLOC (size_t)(PAGE_SIZE * 15) - META_BLOCK_SIZE
 # define SMALL_RESOLUTION 256
 
