@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#    Updated: 2017/08/31 15:16:24 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/09/19 16:56:48 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,17 +114,17 @@ all: $(NAME)
 $(NAME): $(O2)
 	@ar rc $(NAME) $(O2)
 	@ranlib $(NAME)
-	@echo "\033[0;32mLibft compilation done !\033[0;m"
+	@echo "\033[0;33mLibft compilation done !\033[0;m"
 
 $(OPATH)%.o: %.c
 	@gcc $(FLAGS) -I $(INC) -c $< -o $@
 
 clean:
 	@rm -f $(O2)
-	@echo "\033[0;32mObject files deleted !\033[0;m"
+	@echo "\033[0;33mObject files deleted !\033[0;m"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "\033[0;32m$(NAME) deleted !\033[0;m"
+	@echo "\033[0;33m$(NAME) deleted !\033[0;m"
 
 re: fclean all

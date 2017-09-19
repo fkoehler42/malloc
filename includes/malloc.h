@@ -6,18 +6,18 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/19 13:06:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/19 17:24:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 
+# include <libft.h>
 # include <ft_printf.h>
 # include <unistd.h>
 
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
-
 # define PAGE_SIZE getpagesize()
 # define MAX_ALLOC_SIZE (size_t)-1 - (2 * PAGE_SIZE)
 
@@ -63,10 +63,11 @@ t_zone				*g_alloc_start;
 
 void				*ft_malloc(size_t size);
 void				*ft_calloc(size_t count, size_t size);
-void 				ft_free(void *ptr);
+void				ft_free(void *ptr);
+void				show_alloc_mem();
 
 void				*get_allocated_ptr(size_t size);
-int 				deallocate_ptr(void *ptr, t_zone *zone);
+int					deallocate_ptr(void *ptr, t_zone *zone);
 
 t_zone				*get_ptr_zone(void *ptr);
 t_zone				*create_zone(size_t size);
@@ -74,6 +75,7 @@ int					delete_zone(t_zone *zone);
 t_block				*split_and_add_block(t_block *block, size_t size);
 void 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
 
+char				*get_zone_type_str(t_size_type type);
 t_size_type			get_zone_type(size_t size);
 t_size_type			get_block_type(size_t size);
 size_t				get_zone_total_size(t_size_type type);

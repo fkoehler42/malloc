@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_infos.c                                        :+:      :+:    :+:   */
+/*   block_infos.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flav <flav@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/08 17:22:05 by flav              #+#    #+#             */
-/*   Updated: 2017/09/13 19:57:58 by flav             ###   ########.fr       */
+/*   Created: 2017/09/08 17:22:05 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/09/19 16:51:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-
-t_size_type	get_zone_type(size_t size)
-{
-	if (size == TINY_SIZE)
-		return (TINY);
-	else if (size == SMALL_SIZE)
-		return (SMALL);
-	else
-		return (LARGE);
-}
-/*
-** Does not handle large type zone
-*/
-size_t		get_zone_total_size(t_size_type type)
-{
-	if (type == TINY)
-		return (TINY_SIZE - META_ZONE_SIZE);
-	else if (type == SMALL)
-		return (SMALL_SIZE - META_ZONE_SIZE);
-	return (0);
-}
 
 t_size_type	get_block_type(size_t size)
 {
