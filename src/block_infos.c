@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 17:22:05 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/19 16:51:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/20 16:18:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,19 @@ size_t		get_rounded_block_size(size_t size)
 {
 	size_t	alloc_resolution;
 	size_t	modulo;
+	int		metadata_size;
 
+	metadata_size = META_BLOCK_SIZE;
 	if (size <= TINY_MAX_ALLOC)
 		alloc_resolution = TINY_RESOLUTION;
 	else if (size <= SMALL_MAX_ALLOC)
 		alloc_resolution = SMALL_RESOLUTION;
 	else
+	{
 		alloc_resolution = LARGE_RESOLUTION;
-	if ((modulo = (size + META_BLOCK_SIZE) % alloc_resolution) > 0)
+		metadata_size += META_ZONE_SIZE;
+	}
+	if ((modulo = (size + metadata_size) % alloc_resolution) > 0)
 		size = size + alloc_resolution - modulo;
 	return (size);
 }

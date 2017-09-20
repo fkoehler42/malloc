@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/19 17:24:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/20 16:22:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_zone				*g_alloc_start;
 
 void				*ft_malloc(size_t size);
 void				*ft_calloc(size_t count, size_t size);
+void				*ft_realloc(void *ptr, size_t size);
 void				ft_free(void *ptr);
 void				show_alloc_mem();
 
