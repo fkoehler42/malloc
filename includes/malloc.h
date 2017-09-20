@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/20 16:22:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/20 19:41:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_zone				*get_ptr_zone(void *ptr);
 t_zone				*create_zone(size_t size);
 int					delete_zone(t_zone *zone);
 t_block				*split_and_add_block(t_block *block, size_t size);
-void 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
+int 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
 
 char				*get_zone_type_str(t_size_type type);
 t_size_type			get_zone_type(size_t size);

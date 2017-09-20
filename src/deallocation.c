@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 11:17:23 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/18 16:12:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/20 19:37:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static int	is_valid_block(t_block *block, t_zone *zone)
 		return (0);
 	while (tmp)
 	{
-		if (block == tmp && !block->is_free)
-			return (1);
+		// ft_printf("\nblock data address : %p\n", (void*)tmp + META_BLOCK_SIZE);
+		if (tmp == block)
+			return (tmp->is_free ? 0 : 1);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -30,7 +31,7 @@ static int	is_valid_block(t_block *block, t_zone *zone)
 t_zone		*get_ptr_zone(void *ptr)
 {
 	t_zone	*zone;
-	void 	*zone_end;
+	void	*zone_end;
 
 	if ((zone = g_alloc_start))
 	{
@@ -46,7 +47,7 @@ t_zone		*get_ptr_zone(void *ptr)
 	return (NULL);
 }
 
-int		deallocate_ptr(void *ptr, t_zone *zone)
+int			deallocate_ptr(void *ptr, t_zone *zone)
 {
 	t_block	*block;
 
@@ -55,7 +56,8 @@ int		deallocate_ptr(void *ptr, t_zone *zone)
 		return (-1);
 	block->is_free = 1;
 	zone->size -= block->size;
-	merge_contiguous_blocks(block, &zone->size);
+	if (merge_contiguous_blocks(block, &zone->size) < 0)
+		return (-1);
 	if (!(zone->block_lst->next))
 		delete_zone(zone);
 	return (0);
