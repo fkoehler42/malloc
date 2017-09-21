@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/20 19:41:54 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/21 18:49:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
 # define PAGE_SIZE getpagesize()
 # define MAX_ALLOC_SIZE (size_t)-1 - (2 * PAGE_SIZE)
+# define CANARY(x) (&x + 42)
 
 # define META_BLOCK_SIZE sizeof(t_block)
 # define META_ZONE_SIZE sizeof(t_zone)
@@ -34,15 +35,24 @@
 
 # define LARGE_RESOLUTION 1024
 
+typedef	enum 		e_data_type
+{
+	BLOCK,
+	ZONE,
+	NONE
+}					t_data_type;
+
 typedef enum 		e_size_type
 {
 	TINY,
 	SMALL,
-	LARGE
+	LARGE,
+	UNDEFINED
 }					t_size_type;
 
 typedef struct		s_block
 {
+	void			*canary;
 	size_t			size; // block content only (no META)
 	int				is_free;
 	struct s_block	*prev;
@@ -51,6 +61,7 @@ typedef struct		s_block
 
 typedef struct		s_zone
 {
+	void			*canary;
 	t_size_type		type;
 // full_blocks * (block->size + META_BLOCK_SIZE) + free_blocks * META_BLOCK_SIZE
 	size_t			size;
@@ -73,6 +84,8 @@ int					deallocate_ptr(void *ptr, t_zone *zone);
 t_zone				*get_ptr_zone(void *ptr);
 t_zone				*create_zone(size_t size);
 int					delete_zone(t_zone *zone);
+
+int					is_data_valid(void *data, t_data_type data_type);
 t_block				*split_and_add_block(t_block *block, size_t size);
 int 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/18 17:44:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/21 17:40:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static void 		init_zone(t_zone *zone, size_t size)
 
 	first_block = (t_block*)((void*)zone + META_ZONE_SIZE);
 	// ft_printf("First block of zone : %p\n", first_block);
+	first_block->canary = CANARY(first_block->canary);
 	first_block->size = size - (META_ZONE_SIZE + META_BLOCK_SIZE);
 	first_block->is_free = 1;
 	first_block->next = NULL;
 	first_block->prev = NULL;
+	zone->canary = CANARY(zone->canary);
 	zone->type = get_zone_type(size);
 	zone->size = META_ZONE_SIZE + META_BLOCK_SIZE;
 	zone->block_lst = first_block;
