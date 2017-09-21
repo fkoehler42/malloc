@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/21 17:40:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/21 22:24:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,21 @@ t_zone				*create_zone(size_t size)
 		return (NULL);
 	ft_printf("New zone allocated : %p\n", new);
 	init_zone(new, size);
-	if (!(tmp = g_alloc_start))
+	if (!(tmp = g_alloc_start) || g_alloc_start > new)
+	{
+		new->next = g_alloc_start;
 		g_alloc_start = new;
+	}
 	else
 	{
-		while (tmp->next)
+		while (tmp->next && tmp->next < new)
 			tmp = tmp->next;
+		new->next = tmp->next;
 		tmp->next = new;
 		new->prev = tmp;
 	}
+	if (new->next)
+		new->next->prev = new;
 	return (new);
 }
 
