@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/22 14:26:41 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/22 16:34:35 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,21 @@
 
 # define LARGE_RESOLUTION 1024
 
-typedef	enum 		e_data_type
+typedef enum		e_block_state
+{
+	ALLOC,
+	FREE,
+	ALL
+}					t_block_state;
+
+typedef	enum		e_data_type
 {
 	BLOCK,
 	ZONE,
 	NONE
 }					t_data_type;
 
-typedef enum 		e_size_type
+typedef enum		e_size_type
 {
 	TINY,
 	SMALL,
@@ -77,6 +84,7 @@ void				*ft_calloc(size_t count, size_t size);
 void				*ft_realloc(void *ptr, size_t size);
 void				ft_free(void *ptr);
 void				show_alloc_mem(void);
+void				show_mem(t_block_state block_state);
 
 void				*get_allocated_ptr(size_t size);
 int					deallocate_ptr(void *ptr, t_zone *zone);
