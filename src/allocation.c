@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/19 11:26:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/22 18:13:08 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_block	*alloc_new_block(t_zone *zone, t_block *free_block, size_t size)
 	}
 	else
 	{
-		new_block = split_and_add_block(free_block, size);
+		new_block = split_block(free_block, size);
 		zone->size += (size + META_BLOCK_SIZE);
 	}
 	new_block->is_free = 0;
