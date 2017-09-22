@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/21 22:19:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/22 14:11:38 by flav             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		ft_free(void *ptr)
 			exit(1);
 		}
 	}
-	else;
+	else{};
 		//print error msg
 }
 
