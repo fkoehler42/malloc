@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/22 14:11:38 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/25 19:31:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,28 @@ void		ft_free(void *ptr)
 			exit(1);
 		}
 	}
-	else{};
-		//print error msg
 }
 
 void		*ft_realloc(void *ptr, size_t size)
 {
+	t_zone	*zone;
+	void 	*new_ptr;
+
 	if (!ptr)
 		return (ft_malloc(size));
+	if (size == 0)
+	{
+		ft_free(ptr);
+		return (ft_malloc(1));
+	}
+	if ((zone = get_ptr_zone(ptr)) != NULL
+	&& is_valid_block((t_block*)(ptr - META_BLOCK_SIZE), zone))
+	{
+		new_ptr = realloc_process(ptr, size, zone);
+		if (new_ptr != NULL && new_ptr != ptr)
+			deallocate_ptr(ptr, zone);
+		return (new_ptr);
+	}
 	return (NULL);
 }
 

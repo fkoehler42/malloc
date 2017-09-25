@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 11:17:23 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/21 18:42:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/25 12:53:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static int	is_valid_block(t_block *block, t_zone *zone)
+int			is_valid_block(t_block *block, t_zone *zone)
 {
 	t_block *tmp;
 

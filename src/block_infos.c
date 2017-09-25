@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 17:22:05 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/20 16:18:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/25 16:46:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ t_size_type	get_block_type(size_t size)
 		return (LARGE);
 }
 
+/*
+** Block metadata included
+*/
 size_t		get_min_block_size(t_size_type type)
 {
 	size_t	min_alloc;

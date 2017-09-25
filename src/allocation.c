@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/22 18:13:08 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/25 19:38:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,27 @@ void			*get_allocated_ptr(size_t size)
 	if (!alloc_block)
 		return (NULL);
 	return ((void*)alloc_block + META_BLOCK_SIZE);
+}
+
+void			*realloc_process(void *ptr, size_t size, t_zone *zone)
+{
+	t_block		*block;
+	size_t		old_size;
+	size_t 		min_block_size;
+	t_size_type	realloc_type;
+
+	block = (t_block*)(ptr - META_BLOCK_SIZE);
+	old_size = block->size;
+	size = get_rounded_block_size(size);
+	min_block_size = get_min_block_size(zone->type);
+	realloc_type = get_block_type(size);
+	if (realloc_type != zone->type)
+		return (get_dup_block_ptr(block, size, old_size));
+	if (size <= old_size && size > (size - min_block_size))
+		return (ptr);
+	if (size < old_size)
+		return ((void*)reduce_block(block, size, &zone->size) + META_BLOCK_SIZE);
+	// if ((enlarge_block(block, size, &zone->size) != NULL))
+		// return (ptr);
+	return (get_dup_block_ptr(block, size, old_size));
 }
