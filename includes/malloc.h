@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 17:28:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 18:21:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef enum		e_errnum
 	DATA_CORRUPT,
 	FREE_FAILED,
 	MAPPING_FAILED,
+	ALLOC_OVERSIZED,
 	UNMAPPING_FAILED
 }					t_errnum;
 

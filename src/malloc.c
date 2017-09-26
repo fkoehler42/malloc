@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/25 19:31:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 18:22:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void		*ft_malloc(size_t size)
 	if (size == 0)
 		size++;
 	if (size > MAX_ALLOC_SIZE)
+	{
+		put_alloc_error(ALLOC_OVERSIZED, size);
 		return (NULL);
+	}
 	// ft_printf("\n/// ft_malloc debug \\\\\\\nMETA_BLOCK_SIZE : %zu\nMETA_ZONE_SIZE : %zu\nMAX_ALLOC_SIZE : %zu\n", META_BLOCK_SIZE, META_ZONE_SIZE, MAX_ALLOC_SIZE);
 	return (get_allocated_ptr(size));
 }

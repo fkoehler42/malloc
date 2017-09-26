@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 17:46:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 17:40:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 18:25:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ void			put_alloc_error(t_errnum errnum, size_t size)
 		ft_putstr_fd("can't allocate zone of size ", 2);
 		put_size_stderr(size);
 		ft_putstr_fd(" bytes.\n", 2);
+	}
+	else if (errnum == ALLOC_OVERSIZED)
+	{
+		ft_putstr_fd("oversized allocation request (", 2);
+		put_size_stderr(size);
+		ft_putstr_fd(" bytes).\n", 2);
 	}
 }
 
