@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 17:22:05 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/25 16:46:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 12:36:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ size_t		get_min_block_size(t_size_type type)
 	size_t	min_alloc;
 
 	if (type == TINY)
-		min_alloc = 1;
+		min_alloc = TINY_RESOLUTION;
 	else if (type == SMALL)
 		min_alloc = TINY_MAX_ALLOC + 1;
 	else
@@ -45,6 +45,8 @@ size_t		get_rounded_block_size(size_t size)
 	int		metadata_size;
 
 	metadata_size = META_BLOCK_SIZE;
+	if (size < TINY_RESOLUTION)
+		size = TINY_RESOLUTION;
 	if (size <= TINY_MAX_ALLOC)
 		alloc_resolution = TINY_RESOLUTION;
 	else if (size <= SMALL_MAX_ALLOC)
