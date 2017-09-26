@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 11:48:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 17:36:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ static t_block	*find_free_block(size_t size, t_size_type block_type)
 {
 	t_block	*block;
 	t_zone	*zone;
+	size_t	total_zone_size;
 
 	zone = g_alloc_start;
 	while (zone)
 	{
-		if (zone->type == block_type
-		&& (get_zone_total_size(zone->type) - zone->size) >= size)
+		total_zone_size = (zone->type == TINY) ? TINY_SIZE : SMALL_SIZE;
+		if (zone->type == block_type && (total_zone_size - zone->size) >= size)
 		{
 			block = zone->block_lst;
 			while (block)
@@ -67,10 +68,15 @@ void			*get_allocated_ptr(size_t size)
 	size = get_rounded_block_size(size);
 	// ft_printf("Rounded block size %zu\n", size);
 	if ((block_type = get_block_type(size)) == LARGE)
-		new_zone = create_zone(size);
+		new_zone = create_zone(size + META_ZONE_SIZE + META_BLOCK_SIZE);
 	else if (!g_alloc_start
 	|| !(alloc_block = find_free_block(size, block_type)))
-		new_zone = create_zone(get_zone_total_size(block_type) + META_ZONE_SIZE);
+	{
+		if (block_type == TINY)
+			new_zone = create_zone(TINY_SIZE);
+		else if (block_type == SMALL)
+			new_zone = create_zone(SMALL_SIZE);
+	}
 	if (new_zone)
 		alloc_block = alloc_new_block(new_zone, new_zone->block_lst, size);
 	if (!alloc_block)
@@ -92,7 +98,8 @@ void			*realloc_process(void *ptr, size_t size, t_zone *zone)
 	realloc_type = get_block_type(size);
 	if (realloc_type != zone->type)
 		return (get_dup_block_ptr(block, size, old_size));
-	if (size <= old_size && size > (size - min_block_size))
+	if (size <= old_size
+	&& (size > (size - min_block_size) || zone->type == LARGE))
 		return (ptr);
 	if (size < old_size)
 		return ((void*)reduce_block(block, size, &zone->size) + META_BLOCK_SIZE);

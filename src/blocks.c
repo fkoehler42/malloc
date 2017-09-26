@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 20:14:40 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 11:51:11 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 14:07:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,12 @@ int			merge_contiguous_blocks(t_block *block, size_t *zone_size)
 {
 	while (block->prev && block->prev->is_free)
 	{
-		if (!is_data_valid((void*)block->prev, BLOCK))
-			return (-1);
+		check_data_validity((void*)block->prev, BLOCK);
 		block = block->prev;
 	}
 	while (block->next && block->next->is_free)
 	{
-		if (!is_data_valid((void*)block->next, BLOCK))
-			return (-1);
+		check_data_validity((void*)block->next, BLOCK);
 		// ft_printf("\nnext block : %p, is free : %d, size : %zu\n", block->next, block->next->is_free, block->next->size);
 		block->size += block->next->size + META_BLOCK_SIZE;
 		block->next = block->next->next;

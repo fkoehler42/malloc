@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/21 22:24:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 17:29:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ t_zone				*create_zone(size_t size)
 	t_zone	*tmp;
 
 	if ((new = mmap(0, size, PROT_READ | PROT_WRITE,
-		MAP_ANON | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
+	MAP_ANON | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
+	{
+		put_alloc_error(MAPPING_FAILED, size);
 		return (NULL);
-	ft_printf("New zone allocated : %p\n", new);
+	}
+	ft_printf("New zone of size %zu allocated\n", size);
 	init_zone(new, size);
 	if (!(tmp = g_alloc_start) || g_alloc_start > new)
 	{
@@ -64,9 +67,14 @@ int 			delete_zone(t_zone *zone)
 {
 	t_zone	*prev;
 	t_zone	*next;
+	size_t	size;
 
 	prev = zone->prev;
 	next = zone->next;
+	if (zone->type == LARGE)
+		size = zone->size;
+	else
+		size = (zone->type == TINY) ? TINY_SIZE : SMALL_SIZE;
 	ft_printf("Zone deallocated : %p\n", zone);
 	if (munmap(zone, zone->size + META_ZONE_SIZE + META_BLOCK_SIZE) < 0)
 		return (-1);

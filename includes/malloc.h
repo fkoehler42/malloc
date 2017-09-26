@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 11:53:07 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 17:28:33 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define SMALL_MAX_ALLOC (size_t)(PAGE_SIZE * 15) - META_BLOCK_SIZE
 # define SMALL_RESOLUTION 256
 
-# define LARGE_RESOLUTION 1024
+# define LARGE_RESOLUTION PAGE_SIZE
 
 typedef enum		e_block_state
 {
@@ -57,6 +57,14 @@ typedef enum		e_size_type
 	UNDEFINED
 }					t_size_type;
 
+typedef enum		e_errnum
+{
+	DATA_CORRUPT,
+	FREE_FAILED,
+	MAPPING_FAILED,
+	UNMAPPING_FAILED
+}					t_errnum;
+
 typedef struct		s_block
 {
 	void			*canary;
@@ -70,7 +78,7 @@ typedef struct		s_zone
 {
 	void			*canary;
 	t_size_type		type;
-// full_blocks * (block->size + META_BLOCK_SIZE) + free_blocks * META_BLOCK_SIZE
+// full_blocks * (block->size + META_BLOCK_SIZE) + (free_blocks * META_BLOCK_SIZE) + META_ZONE_SIZE
 	size_t			size;
 	t_block			*block_lst;
 	struct s_zone	*prev;
@@ -97,7 +105,10 @@ t_zone				*create_zone(size_t size);
 int					delete_zone(t_zone *zone);
 
 int					is_valid_block(t_block *block, t_zone *zone);
-int					is_data_valid(void *data, t_data_type data_type);
+void				check_data_validity(void *data, t_data_type data_type);
+void				put_alloc_error(t_errnum errnum, size_t size);
+void				put_error(t_errnum errnum, void *address);
+
 t_block				*split_block(t_block *block, size_t size);
 int 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
 t_block				*reduce_block(t_block *block, size_t size,
@@ -109,7 +120,6 @@ t_block				*enlarge_block(t_block *block, size_t size,
 char				*get_zone_type_str(t_size_type type);
 t_size_type			get_zone_type(size_t size);
 t_size_type			get_block_type(size_t size);
-size_t				get_zone_total_size(t_size_type type);
 size_t				get_min_block_size(t_size_type type);
 size_t				get_rounded_block_size(size_t size);
 

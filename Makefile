@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/09/21 21:21:01 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/09/26 17:41:16 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@
 SRC = allocation.c \
 	block_infos.c \
 	blocks.c \
-	data_protection.c \
 	deallocation.c \
+	error_handling.c \
 	malloc.c \
 	show_memory.c \
 	zone_infos.c \
