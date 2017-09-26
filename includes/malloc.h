@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/25 17:27:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 11:53:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
 t_block				*reduce_block(t_block *block, size_t size,
 					size_t *zone_size);
 t_block				*enlarge_block(t_block *block, size_t size,
-					size_t *zone_size);
+					size_t *zone_size, size_t min_block_size);
 
 
 char				*get_zone_type_str(t_size_type type);

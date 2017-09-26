@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/25 19:38:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 11:48:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void			*realloc_process(void *ptr, size_t size, t_zone *zone)
 		return (ptr);
 	if (size < old_size)
 		return ((void*)reduce_block(block, size, &zone->size) + META_BLOCK_SIZE);
-	// if ((enlarge_block(block, size, &zone->size) != NULL))
-		// return (ptr);
+	if ((enlarge_block(block, size, &zone->size, min_block_size) != NULL))
+		return (ptr);
 	return (get_dup_block_ptr(block, size, old_size));
 }

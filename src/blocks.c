@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 20:14:40 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/25 19:26:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 11:51:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ t_block		*reduce_block(t_block *block, size_t size, size_t *zone_size)
 	return (block);
 }
 
-t_block		*enlarge_block(t_block *block, size_t size, size_t *zone_size)
+t_block		*enlarge_block(t_block *block, size_t size, size_t *zone_size,
+size_t min_block_size)
 {
 	t_block	*tmp;
 
@@ -51,6 +52,11 @@ t_block		*enlarge_block(t_block *block, size_t size, size_t *zone_size)
 		block->next->prev = block;
 	if (block->size < size)
 		return (NULL);
+	if (block->size >= size + min_block_size)
+	{
+		split_block(block, size);
+		block->next->is_free = 1;
+	}
 	return (block);
 }
 
