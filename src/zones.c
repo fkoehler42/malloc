@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 17:29:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 19:58:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,36 @@ static void 		init_zone(t_zone *zone, size_t size)
 	zone->next = NULL;
 }
 
+static void			insert_zone_into_list(t_zone *zone)
+{
+	t_zone	*tmp;
+
+	if (!(tmp = g_alloc_start))
+		g_alloc_start = zone;
+	else if (g_alloc_start > zone)
+	{
+		check_data_validity((void*)g_alloc_start, ZONE);
+		zone->next = g_alloc_start;
+		g_alloc_start = zone;
+	}
+	else
+	{
+		check_data_validity((void*)tmp, ZONE);
+		while (tmp->next && tmp->next < zone && (tmp = tmp->next))
+			check_data_validity((void*)tmp, ZONE);
+		zone->next = tmp->next;
+		tmp->next = zone;
+		zone->prev = tmp;
+	}
+	if (zone->next)
+		zone->next->prev = zone;
+}
+
 t_zone				*create_zone(size_t size)
 {
 	t_zone	*new;
-	t_zone	*tmp;
 
-	if ((new = mmap(0, size, PROT_READ | PROT_WRITE,
+	if ((new = (t_zone*)mmap(0, size, PROT_READ | PROT_WRITE,
 	MAP_ANON | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 	{
 		put_alloc_error(MAPPING_FAILED, size);
@@ -45,21 +69,7 @@ t_zone				*create_zone(size_t size)
 	}
 	ft_printf("New zone of size %zu allocated\n", size);
 	init_zone(new, size);
-	if (!(tmp = g_alloc_start) || g_alloc_start > new)
-	{
-		new->next = g_alloc_start;
-		g_alloc_start = new;
-	}
-	else
-	{
-		while (tmp->next && tmp->next < new)
-			tmp = tmp->next;
-		new->next = tmp->next;
-		tmp->next = new;
-		new->prev = tmp;
-	}
-	if (new->next)
-		new->next->prev = new;
+	insert_zone_into_list(new);
 	return (new);
 }
 
@@ -76,8 +86,11 @@ int 			delete_zone(t_zone *zone)
 	else
 		size = (zone->type == TINY) ? TINY_SIZE : SMALL_SIZE;
 	ft_printf("Zone deallocated : %p\n", zone);
-	if (munmap(zone, zone->size + META_ZONE_SIZE + META_BLOCK_SIZE) < 0)
+	if (munmap(zone, size) < 0)
+	{
+		put_error(UNMAPPING_FAILED, zone);
 		return (-1);
+	}
 	if (!prev)
 	{
 		g_alloc_start = next;

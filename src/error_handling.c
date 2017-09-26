@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 17:46:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 18:25:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 19:57:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ void			put_error(t_errnum errnum, void *address)
 		ft_putstr_fd(" is corrupted (probably due to data overriding).\n", 2);
 		abort();
 	}
+	else if (errnum == NOT_ALLOCATED)
+	{
+		ft_putstr_fd("pointer to address 0x", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(" was not allocated before freeing attempt\n", 2);
+		abort();
+	}
 	else if (errnum == UNMAPPING_FAILED)
 	{
 		ft_putstr_fd("can't release zone at address 0x", 2);
@@ -58,7 +65,6 @@ void			put_error(t_errnum errnum, void *address)
 
 void			check_data_validity(void *data, t_data_type data_type)
 {
-
 	if (data_type == BLOCK && (!((t_block*)data)->canary
 	|| ((t_block*)data)->canary != CANARY(((t_block*)data)->canary)))
 		put_error(DATA_CORRUPT, data);

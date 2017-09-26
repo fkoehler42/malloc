@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 18:22:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 19:11:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void		ft_free(void *ptr)
 	if (ptr != NULL && (zone = get_ptr_zone(ptr)) != NULL)
 	{
 		// ft_printf("\nfree called on ptr %p, found in range of zone %p !\n", ptr, zone);
-		if (deallocate_ptr(ptr, zone) == -1){
-			//print error msg and raise a SIGABORT
-			ft_printf("\nError in deallocation process\n");
-			exit(1);
-		}
+		if (deallocate_ptr(ptr, zone) == -1)
+			put_error(NOT_ALLOCATED, ptr);
 	}
+	else if (ptr && !zone)
+		put_error(NOT_ALLOCATED, ptr);
 }
 
 void		*ft_realloc(void *ptr, size_t size)

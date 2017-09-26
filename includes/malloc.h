@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 18:21:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 18:47:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef enum		e_size_type
 typedef enum		e_errnum
 {
 	DATA_CORRUPT,
-	FREE_FAILED,
+	NOT_ALLOCATED,
 	MAPPING_FAILED,
 	ALLOC_OVERSIZED,
 	UNMAPPING_FAILED
@@ -111,7 +111,7 @@ void				put_alloc_error(t_errnum errnum, size_t size);
 void				put_error(t_errnum errnum, void *address);
 
 t_block				*split_block(t_block *block, size_t size);
-int 				merge_contiguous_blocks(t_block *block, size_t *zone_size);
+void				merge_contiguous_blocks(t_block *block, size_t *zone_size);
 t_block				*reduce_block(t_block *block, size_t size,
 					size_t *zone_size);
 t_block				*enlarge_block(t_block *block, size_t size,

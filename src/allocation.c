@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 17:36:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 19:15:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ static t_block	*find_free_block(size_t size, t_size_type block_type)
 	zone = g_alloc_start;
 	while (zone)
 	{
+		check_data_validity((void*)zone, ZONE);
 		total_zone_size = (zone->type == TINY) ? TINY_SIZE : SMALL_SIZE;
 		if (zone->type == block_type && (total_zone_size - zone->size) >= size)
 		{
 			block = zone->block_lst;
 			while (block)
 			{
+				check_data_validity((void*)block, BLOCK);
 				if (block->is_free && block->size >= size)
 					return (alloc_new_block(zone, block, size));
 				block = block->next;

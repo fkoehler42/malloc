@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 20:14:40 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 14:07:56 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/26 19:49:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ size_t min_block_size)
 		tmp = tmp->next;
 		block->size += (tmp->size + META_BLOCK_SIZE);
 		*zone_size += tmp->size;
+		check_data_validity((void*)tmp, BLOCK);
 	}
 	if (block == tmp)
 		return (NULL);
@@ -75,7 +76,7 @@ t_block		*split_block(t_block *block, size_t size)
 	return (block);
 }
 
-int			merge_contiguous_blocks(t_block *block, size_t *zone_size)
+void			merge_contiguous_blocks(t_block *block, size_t *zone_size)
 {
 	while (block->prev && block->prev->is_free)
 	{
@@ -90,5 +91,4 @@ int			merge_contiguous_blocks(t_block *block, size_t *zone_size)
 		block->next = block->next->next;
 		*zone_size += META_BLOCK_SIZE;
 	}
-	return (0);
 }

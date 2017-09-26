@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 21:20:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/22 17:00:32 by flav             ###   ########.fr       */
+/*   Updated: 2017/09/26 19:45:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void		show_block_infos(t_block *block, t_block_state block_state)
 	}
 	else
 		ft_printf("%p - %p : %zu bytes\n", block_start, block_end, block->size);
-
 }
 
 static size_t	show_blocks(t_zone *zone, t_block_state block_state)
@@ -43,6 +42,7 @@ static size_t	show_blocks(t_zone *zone, t_block_state block_state)
 	block = zone->block_lst;
 	while (block)
 	{
+		check_data_validity((void*)block, BLOCK);
 		if ((block_state == ALLOC && block->is_free)
 		|| (block_state == FREE && !block->is_free))
 		{
@@ -65,6 +65,7 @@ static void		show_zones(t_block_state block_state)
 	zone = g_alloc_start;
 	while (zone)
 	{
+		check_data_validity((void*)zone, ZONE);
 		ft_printf("%s%-5s%s : %p\n", PURPLE, get_zone_type_str(zone->type), OFF, zone);
 		total_size += show_blocks(zone, block_state);
 		zone = zone->next;
