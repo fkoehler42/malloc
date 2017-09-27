@@ -1,15 +1,14 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <malloc.h>
 
 int main()
 {
-	ft_malloc(42);
-	ft_malloc(420);
-	ft_malloc(1024);
-	ft_malloc(24903);
-	ft_malloc(9924900);
+	void	*ptr;
+
+	ptr = malloc(42);
+	ptr = malloc(420);
+	ptr = malloc(1024);
+	ptr = malloc(24903);
+	ptr = malloc(9924900);
 
 	ft_printf("\n---show_alloc_mem---\n");
 	show_alloc_mem();

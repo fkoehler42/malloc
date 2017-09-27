@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <malloc.h>
 
 int main()
@@ -10,17 +7,17 @@ int main()
 	int		i = 0;
 
 	str2 = NULL;
-	str1 = ft_malloc(42);
+	str1 = malloc(42);
 	while (i < 41)
 	{
 		str1[i] = (i % 26) + 'a';
 		i++;
 	}
 	str1[i] = 0;
-	printf("--Memory after malloc(42)--\n");
+	ft_printf("--Memory after malloc(42)--\n");
 	show_mem(ALL);
-	str2 = ft_realloc(str1, 42000);
-	printf("\n--Memory after realloc(42000)--\n");
+	str2 = realloc(str1, 42000);
+	ft_printf("\n--Memory after realloc(42000)--\n");
 	show_mem(ALL);
 	return 0;
 }

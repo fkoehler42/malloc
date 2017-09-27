@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <malloc.h>
 
 int main()
@@ -10,7 +7,7 @@ int main()
 	char	*s;
 	while (i < (int)j)
 	{
-		s = ft_malloc(j);
+		s = malloc(j);
 		s[0] = 42;
 		i++;
 	}
