@@ -6,9 +6,14 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/09/26 17:41:16 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/09/27 15:34:25 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# DEFINE HOSTTYPE
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
 
 # FILES
 SRC = allocation.c \
@@ -27,10 +32,10 @@ OBJS = $(SRC:.c=.o)
 O2 = $(addprefix $(OPATH), $(OBJS))
 
 # DIRECTORIES
-vpath %.c ./src
-LIBPATH = ./libft/
-OPATH = ./obj/
-INC = ./includes/
+vpath %.c src
+LIBPATH = libft/
+OPATH = obj/
+INC = includes/
 LIBINC = $(LIBPATH)$(INC)
 LIB	= $(LIBPATH)libft.a
 
@@ -39,15 +44,10 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra
 
 # PROCESS
-ifeq ($(HOSTTYPE),)
-	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
-endif
-
 all: $(NAME)
 
 $(NAME): $(LIB) $(O2)
-	@ar rc $(NAME) $(O2)
-	@ranlib $(NAME)
+	@gcc $(FLAGS) $(O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@ -shared
 	@echo "\033[0;34m$(NAME) compilation done !\033[0;m"
 	@ln -s $@ $(SYMLINK)
 	@echo "\033[0;34m$(SYMLINK) symbolic link created !\033[0;m"
@@ -57,7 +57,7 @@ $(LIB):
 	@make -C $(LIBPATH)
 
 $(OPATH)%.o: %.c
-	@$(CC) $(FLAGS) -I $(INC) -I $(LIBINC) -c $< -o $@
+	@$(CC) $(FLAGS) -I $(INC) -I $(LIBINC) -c $< -o $@ -fPIC
 
 clean:
 	@rm -f $(O2)
@@ -70,3 +70,5 @@ fclean: clean
 	@echo "\033[0;34mLibft cleaned.\033[0;m"
 
 re: fclean all
+
+.PHONY: all clean fclean re
