@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 18:47:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/27 18:53:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
+
+# define ERROR_OUT_OF_RANGE 0
 # define PAGE_SIZE getpagesize()
 # define MAX_ALLOC_SIZE (size_t)-1 - (2 * PAGE_SIZE)
 # define CANARY(x) (&x + 42)
@@ -25,12 +27,12 @@
 # define META_BLOCK_SIZE sizeof(t_block)
 # define META_ZONE_SIZE sizeof(t_zone)
 
-# define TINY_SIZE (size_t)(PAGE_SIZE * 100)
-# define TINY_MAX_ALLOC (size_t)(PAGE_SIZE / 4) - META_BLOCK_SIZE
+# define TINY_SIZE (PAGE_SIZE * 100)
+# define TINY_MAX_ALLOC (PAGE_SIZE / 4) - META_BLOCK_SIZE
 # define TINY_RESOLUTION 16
 
-# define SMALL_SIZE (size_t)(PAGE_SIZE * 1700)
-# define SMALL_MAX_ALLOC (size_t)(PAGE_SIZE * 15) - META_BLOCK_SIZE
+# define SMALL_SIZE (PAGE_SIZE * 1700)
+# define SMALL_MAX_ALLOC (PAGE_SIZE * 15) - META_BLOCK_SIZE
 # define SMALL_RESOLUTION 256
 
 # define LARGE_RESOLUTION PAGE_SIZE
@@ -88,10 +90,10 @@ typedef struct		s_zone
 
 t_zone				*g_alloc_start;
 
-void				*ft_malloc(size_t size);
-void				*ft_calloc(size_t count, size_t size);
-void				*ft_realloc(void *ptr, size_t size);
-void				ft_free(void *ptr);
+void				*malloc(size_t size);
+void				*calloc(size_t count, size_t size);
+void				*realloc(void *ptr, size_t size);
+void				free(void *ptr);
 void				show_alloc_mem(void);
 void				show_mem(t_block_state block_state);
 
@@ -117,7 +119,7 @@ t_block				*reduce_block(t_block *block, size_t size,
 t_block				*enlarge_block(t_block *block, size_t size,
 					size_t *zone_size, size_t min_block_size);
 
-
+void				put_size_stderr(size_t size);
 char				*get_zone_type_str(t_size_type type);
 t_size_type			get_zone_type(size_t size);
 t_size_type			get_block_type(size_t size);

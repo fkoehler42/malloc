@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 17:46:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 19:57:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/27 18:11:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void 	put_size_stderr(size_t size)
+void 			put_size_stderr(size_t size)
 {
 	if (size > 9)
 		put_size_stderr(size / 10);

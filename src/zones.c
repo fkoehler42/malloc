@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 19:58:21 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/27 18:56:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ t_zone				*create_zone(size_t size)
 		put_alloc_error(MAPPING_FAILED, size);
 		return (NULL);
 	}
-	ft_printf("New zone of size %zu allocated\n", size);
 	init_zone(new, size);
 	insert_zone_into_list(new);
 	return (new);
@@ -85,7 +84,7 @@ int 			delete_zone(t_zone *zone)
 		size = zone->size;
 	else
 		size = (zone->type == TINY) ? TINY_SIZE : SMALL_SIZE;
-	ft_printf("Zone deallocated : %p\n", zone);
+	// ft_printf("Zone deallocated : %p\n", zone);
 	if (munmap(zone, size) < 0)
 	{
 		put_error(UNMAPPING_FAILED, zone);
@@ -96,11 +95,9 @@ int 			delete_zone(t_zone *zone)
 		g_alloc_start = next;
 		if (g_alloc_start)
 			g_alloc_start->prev = NULL;
+		return (0);
 	}
-	else
-	{
-		prev->next = next;
-		next->prev = prev;
-	}
+	prev->next = next;
+	next->prev = prev;
 	return (0);
 }
