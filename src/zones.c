@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/27 18:56:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:19:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ static void			insert_zone_into_list(t_zone *zone)
 {
 	t_zone	*tmp;
 
-	if (!(tmp = g_alloc_start))
-		g_alloc_start = zone;
-	else if (g_alloc_start > zone)
+	if (!(tmp = g_alloc.heap))
+		g_alloc.heap = zone;
+	else if (g_alloc.heap > zone)
 	{
-		check_data_validity((void*)g_alloc_start, ZONE);
-		zone->next = g_alloc_start;
-		g_alloc_start = zone;
+		check_data_validity((void*)g_alloc.heap, ZONE);
+		zone->next = g_alloc.heap;
+		g_alloc.heap = zone;
 	}
 	else
 	{
@@ -92,9 +92,9 @@ int 			delete_zone(t_zone *zone)
 	}
 	if (!prev)
 	{
-		g_alloc_start = next;
-		if (g_alloc_start)
-			g_alloc_start->prev = NULL;
+		g_alloc.heap = next;
+		if (g_alloc.heap)
+			g_alloc.heap->prev = NULL;
 		return (0);
 	}
 	prev->next = next;

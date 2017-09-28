@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/27 18:53:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:34:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <libft.h>
 # include <ft_printf.h>
 # include <unistd.h>
+# include <pthread.h>
 
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
 
@@ -65,7 +66,8 @@ typedef enum		e_errnum
 	NOT_ALLOCATED,
 	MAPPING_FAILED,
 	ALLOC_OVERSIZED,
-	UNMAPPING_FAILED
+	UNMAPPING_FAILED,
+	LOCKER_INIT_FAILED
 }					t_errnum;
 
 typedef struct		s_block
@@ -88,7 +90,14 @@ typedef struct		s_zone
 	struct s_zone	*next;
 }					t_zone;
 
-t_zone				*g_alloc_start;
+typedef struct		s_alloc
+{
+	t_zone			*heap;
+	pthread_mutex_t	locker;
+	int				locker_init;
+}					t_alloc;
+
+extern t_alloc		g_alloc;
 
 void				*malloc(size_t size);
 void				*calloc(size_t count, size_t size);
@@ -97,6 +106,7 @@ void				free(void *ptr);
 void				show_alloc_mem(void);
 void				show_mem(t_block_state block_state);
 
+void				init_locker(void);
 void				*get_allocated_ptr(size_t size);
 int					deallocate_ptr(void *ptr, t_zone *zone);
 void				*realloc_process(void *ptr, size_t size, t_zone *zone);
@@ -119,11 +129,11 @@ t_block				*reduce_block(t_block *block, size_t size,
 t_block				*enlarge_block(t_block *block, size_t size,
 					size_t *zone_size, size_t min_block_size);
 
-void				put_size_stderr(size_t size);
 char				*get_zone_type_str(t_size_type type);
 t_size_type			get_zone_type(size_t size);
 t_size_type			get_block_type(size_t size);
 size_t				get_min_block_size(t_size_type type);
 size_t				get_rounded_block_size(size_t size);
+void				put_size_stderr(size_t size);
 
 #endif

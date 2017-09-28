@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 17:46:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/27 18:11:38 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:44:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void			put_error(t_errnum errnum, void *address)
 		ft_putstr_fd("can't release zone at address 0x", 2);
 		ft_putendl_fd(str, 2);
 	}
+	else if (errnum == LOCKER_INIT_FAILED)
+		ft_putstr_fd("can't initialize the multi-thread locker\n", 2);
 }
 
 void			check_data_validity(void *data, t_data_type data_type)

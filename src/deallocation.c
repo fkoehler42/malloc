@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 11:17:23 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 18:50:05 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:14:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_zone		*get_ptr_zone(void *ptr)
 	void	*zone_end;
 	size_t	total_zone_size;
 
-	if ((zone = g_alloc_start))
+	if ((zone = g_alloc.heap))
 	{
 		while (zone)
 		{

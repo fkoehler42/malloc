@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 19:15:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:13:51 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_block	*find_free_block(size_t size, t_size_type block_type)
 	t_zone	*zone;
 	size_t	total_zone_size;
 
-	zone = g_alloc_start;
+	zone = g_alloc.heap;
 	while (zone)
 	{
 		check_data_validity((void*)zone, ZONE);
@@ -71,7 +71,7 @@ void			*get_allocated_ptr(size_t size)
 	// ft_printf("Rounded block size %zu\n", size);
 	if ((block_type = get_block_type(size)) == LARGE)
 		new_zone = create_zone(size + META_ZONE_SIZE + META_BLOCK_SIZE);
-	else if (!g_alloc_start
+	else if (!g_alloc.heap
 	|| !(alloc_block = find_free_block(size, block_type)))
 	{
 		if (block_type == TINY)

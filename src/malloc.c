@@ -6,16 +6,21 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/27 18:56:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:43:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
+t_alloc		g_alloc = {NULL, PTHREAD_MUTEX_INITIALIZER, 0};
+
 void		free(void *ptr)
 {
 	t_zone	*zone;
 
+	if (!g_alloc.locker_init)
+		init_locker();
+	pthread_mutex_lock(&g_alloc.locker);
 	if (ptr != NULL)
 	{
 		if ((zone = get_ptr_zone(ptr)) != NULL)
@@ -26,13 +31,18 @@ void		free(void *ptr)
 		else if (ERROR_OUT_OF_RANGE)
 			put_error(NOT_ALLOCATED, ptr);
 	}
+	pthread_mutex_unlock(&g_alloc.locker);
 }
 
 void		*realloc(void *ptr, size_t size)
 {
 	t_zone	*zone;
-	void 	*new_ptr;
+	void	*new_ptr;
 
+	new_ptr = NULL;
+	if (!g_alloc.locker_init)
+		init_locker();
+	pthread_mutex_lock(&g_alloc.locker);
 	if (!ptr)
 		return (malloc(size));
 	if (size == 0)
@@ -46,16 +56,16 @@ void		*realloc(void *ptr, size_t size)
 		new_ptr = realloc_process(ptr, size, zone);
 		if (new_ptr != NULL && new_ptr != ptr)
 			deallocate_ptr(ptr, zone);
-		return (new_ptr);
 	}
 	else if (!zone && ERROR_OUT_OF_RANGE)
 		put_error(NOT_ALLOCATED, ptr);
-	return (NULL);
+	pthread_mutex_unlock(&g_alloc.locker);
+	return (new_ptr);
 }
 
 void		*calloc(size_t count, size_t size)
 {
-	void 	*ptr;
+	void	*ptr;
 	size_t	length;
 
 	length = count * size;
@@ -66,13 +76,21 @@ void		*calloc(size_t count, size_t size)
 
 void		*malloc(size_t size)
 {
+	void	*ptr;
+
+	ptr = NULL;
+	if (!g_alloc.locker_init)
+		init_locker();
+	if (pthread_mutex_lock(&g_alloc.locker) == 0)
+		ft_putstr("Locked\n");
 	if (size == 0)
 		size++;
 	if (size > MAX_ALLOC_SIZE)
-	{
 		put_alloc_error(ALLOC_OVERSIZED, size);
-		return (NULL);
-	}
+	else
+		ptr = get_allocated_ptr(size);
+	if (pthread_mutex_unlock(&g_alloc.locker) == 0)
+		ft_putstr("Unlocked\n");
 	// ft_printf("\n/// ft_malloc debug \\\\\\\nMETA_BLOCK_SIZE : %zu\nMETA_ZONE_SIZE : %zu\nMAX_ALLOC_SIZE : %zu\n", META_BLOCK_SIZE, META_ZONE_SIZE, MAX_ALLOC_SIZE);
-	return (get_allocated_ptr(size));
+	return (ptr);
 }

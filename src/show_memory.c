@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 21:20:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 19:45:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 16:18:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void		show_zones(t_block_state block_state)
 	t_zone 	*zone;
 
 	total_size = 0;
-	zone = g_alloc_start;
+	zone = g_alloc.heap;
 	while (zone)
 	{
 		check_data_validity((void*)zone, ZONE);
