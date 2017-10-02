@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/28 19:16:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/02 17:11:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,9 @@ t_block				*reduce_block(t_block *block, size_t size,
 t_block				*enlarge_block(t_block *block, size_t size,
 					size_t *zone_size, size_t min_block_size);
 
-char				*get_zone_type_str(t_size_type type);
 t_size_type			get_zone_type(size_t size);
 t_size_type			get_block_type(size_t size);
 size_t				get_min_block_size(t_size_type type);
 size_t				get_rounded_block_size(size_t size);
-void				put_size_stderr(size_t size);
 
 #endif
