@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/02 15:55:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/02 14:50:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void				ft_putendl(char const *s);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr(int n);
 void				ft_putnbr_fd(int n, int fd);
+void				ft_put_intmax(intmax_t n, int base);
+void				ft_put_intmax_fd(intmax_t n, int base, int fd);
+void				ft_put_uintmax(uintmax_t n, int base);
+void				ft_put_uintmax_fd(uintmax_t n, int base, int fd);
+
 void				ft_replace_char(char *s, char to_find, char replace);
 char				*ft_replace_str(const char *s1, unsigned int start,
 					size_t len, const char *s2);
