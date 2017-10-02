@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/09/28 16:44:40 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/10/02 17:29:06 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,13 @@ endif
 
 # FILES
 SRC = allocation.c \
-	block_infos.c \
 	blocks.c \
 	deallocation.c \
 	error_handling.c \
 	locker_init.c \
 	malloc.c \
 	show_memory.c \
-	zone_infos.c \
+	utils.c \
 	zones.c
 
 NAME = libft_malloc_$(HOSTTYPE).so
@@ -54,7 +53,7 @@ $(NAME): $(LIB) $(O2)
 	@echo "\033[0;34m$(SYMLINK) symbolic link created !\033[0;m"
 
 $(LIB):
-	@echo "\033[0;34mWaiting, libft is in compilation...\033[0;m"
+	@echo "\033[0;34mWaiting for libft compilation...\033[0;m"
 	@make -C $(LIBPATH)
 
 $(OPATH)%.o: %.c
@@ -68,7 +67,6 @@ fclean: clean
 	@rm -f $(NAME) $(SYMLINK)
 	@echo "\033[0;34m$(NAME) and $(SYMLINK) deleted !\033[0;m"
 	-@make fclean -C $(LIBPATH)
-	@echo "\033[0;34mLibft cleaned.\033[0;m"
 
 re: fclean all
 

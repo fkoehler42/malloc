@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   block_infos.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/08 17:22:05 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/26 12:36:12 by fkoehler         ###   ########.fr       */
+/*   Created: 2017/10/02 17:19:25 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/10/02 17:20:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,14 @@ size_t		get_rounded_block_size(size_t size)
 	if ((modulo = (size + metadata_size) % alloc_resolution) > 0)
 		size = size + alloc_resolution - modulo;
 	return (size);
+}
+
+t_size_type	get_zone_type(size_t size)
+{
+	if (size == (size_t)TINY_SIZE)
+		return (TINY);
+	else if (size == (size_t)SMALL_SIZE)
+		return (SMALL);
+	else
+		return (LARGE);
 }
