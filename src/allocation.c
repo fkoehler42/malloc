@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/28 16:13:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/02 19:47:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static t_block	*alloc_new_block(t_zone *zone, t_block *free_block, size_t size)
 	t_block	*new_block;
 
 	min_block_size = get_min_block_size(zone->type);
-	if (free_block->size == size || free_block->size < (size + min_block_size))
+	if (free_block->size < (size + min_block_size))
 	{
 		new_block = free_block;
-		zone->size += size;
+		zone->size += new_block->size;
 	}
 	else
 	{
@@ -101,7 +101,7 @@ void			*realloc_process(void *ptr, size_t size, t_zone *zone)
 	if (realloc_type != zone->type)
 		return (get_dup_block_ptr(block, size, old_size));
 	if (size <= old_size
-	&& (size > (size - min_block_size) || zone->type == LARGE))
+	&& (size > (old_size - min_block_size) || zone->type == LARGE))
 		return (ptr);
 	if (size < old_size)
 		return ((void*)reduce_block(block, size, &zone->size) + META_BLOCK_SIZE);

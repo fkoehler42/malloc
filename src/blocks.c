@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 20:14:40 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/27 19:27:45 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/02 20:25:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void		*get_dup_block_ptr(t_block *block, size_t size, size_t old_size)
 t_block		*reduce_block(t_block *block, size_t size, size_t *zone_size)
 {
 	split_block(block, size);
+	*zone_size = *zone_size + META_BLOCK_SIZE - block->next->size;
 	block->next->is_free = 1;
-	*zone_size -= block->next->size;
 	merge_contiguous_blocks(block->next, zone_size);
 	return (block);
 }
@@ -56,6 +56,7 @@ size_t min_block_size)
 	if (block->size >= size + min_block_size)
 	{
 		split_block(block, size);
+		*zone_size = *zone_size + META_BLOCK_SIZE - block->next->size;
 		block->next->is_free = 1;
 	}
 	return (block);
@@ -89,6 +90,6 @@ void			merge_contiguous_blocks(t_block *block, size_t *zone_size)
 		// ft_printf("\nnext block : %p, is free : %d, size : %zu\n", block->next, block->next->is_free, block->next->size);
 		block->size += block->next->size + META_BLOCK_SIZE;
 		block->next = block->next->next;
-		*zone_size += META_BLOCK_SIZE;
+		*zone_size -= META_BLOCK_SIZE;
 	}
 }

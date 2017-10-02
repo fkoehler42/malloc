@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 21:20:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/02 17:17:10 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/02 17:31:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,18 @@ static void		show_zones(t_block_state block_state)
 
 void			show_alloc_mem(void)
 {
+	if (!g_alloc.locker_init)
+		init_locker();
+	pthread_mutex_lock(&g_alloc.locker);
 	show_zones(ALLOC);
+	pthread_mutex_unlock(&g_alloc.locker);
 }
 
 void			show_mem(t_block_state block_state)
 {
+	if (!g_alloc.locker_init)
+		init_locker();
+	pthread_mutex_lock(&g_alloc.locker);
 	show_zones(block_state);
+	pthread_mutex_unlock(&g_alloc.locker);
 }
