@@ -23,10 +23,13 @@ int 	main()
 	i = 0;
 	while (i < 10)
 	{
-		if (pthread_create(&thread_id, NULL, allocate, NULL) == 0)
-			ft_putstr("thread created\n");
+		if (pthread_create(&thread_id, NULL, allocate, NULL) != 0)
+		{
+			ft_printf("Error on thread creation\n");
+			exit(1);
+		}
 		i++;
 	}
-	show_mem(ALL);
+	show_mem(FREE);
 	return (0);
 }

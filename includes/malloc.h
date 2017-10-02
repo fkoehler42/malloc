@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/28 16:34:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/09/28 19:16:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <libft.h>
 # include <ft_printf.h>
-# include <unistd.h>
 # include <pthread.h>
 
 # define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);

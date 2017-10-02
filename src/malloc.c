@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/28 16:43:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/02 11:56:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void		*realloc(void *ptr, size_t size)
 	new_ptr = NULL;
 	if (!g_alloc.locker_init)
 		init_locker();
-	pthread_mutex_lock(&g_alloc.locker);
 	if (!ptr)
 		return (malloc(size));
 	if (size == 0)
@@ -50,6 +49,7 @@ void		*realloc(void *ptr, size_t size)
 		free(ptr);
 		return (malloc(1));
 	}
+	pthread_mutex_lock(&g_alloc.locker);
 	if ((zone = get_ptr_zone(ptr)) != NULL
 	&& is_valid_block((t_block*)(ptr - META_BLOCK_SIZE), zone))
 	{
@@ -81,16 +81,14 @@ void		*malloc(size_t size)
 	ptr = NULL;
 	if (!g_alloc.locker_init)
 		init_locker();
-	if (pthread_mutex_lock(&g_alloc.locker) == 0)
-		ft_putstr("Locked\n");
+	pthread_mutex_lock(&g_alloc.locker);
 	if (size == 0)
 		size++;
 	if (size > MAX_ALLOC_SIZE)
 		put_alloc_error(ALLOC_OVERSIZED, size);
 	else
 		ptr = get_allocated_ptr(size);
-	if (pthread_mutex_unlock(&g_alloc.locker) == 0)
-		ft_putstr("Unlocked\n");
+	pthread_mutex_unlock(&g_alloc.locker);
 	// ft_printf("\n/// ft_malloc debug \\\\\\\nMETA_BLOCK_SIZE : %zu\nMETA_ZONE_SIZE : %zu\nMAX_ALLOC_SIZE : %zu\n", META_BLOCK_SIZE, META_ZONE_SIZE, MAX_ALLOC_SIZE);
 	return (ptr);
 }
