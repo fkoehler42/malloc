@@ -30,6 +30,7 @@ int 	main()
 		}
 		i++;
 	}
-	show_mem(FREE);
+	sleep(1);
+	show_mem(ALL);
 	return (0);
 }

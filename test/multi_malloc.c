@@ -11,5 +11,6 @@ int main()
 		s[0] = 42;
 		i++;
 	}
+	show_mem(ALL);
 	return 0;
 }
