@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/10/03 13:12:03 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/10/03 15:25:50 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC = allocation.c \
 	malloc.c \
 	multi_thread_safe.c \
 	show_memory.c \
+	show_memory_dump.c \
 	utils.c \
 	zones.c
 

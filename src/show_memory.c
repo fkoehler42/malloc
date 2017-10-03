@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 21:20:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/02 17:31:38 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/03 16:44:44 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void		show_block_infos(t_block *block, t_block_state block_state)
+static void		show_block_infos(t_block *block, t_display_flag display_flag)
 {
 	void	*block_start;
 	void	*block_end;
@@ -20,7 +20,7 @@ static void		show_block_infos(t_block *block, t_block_state block_state)
 	block_start = (void*)block + META_BLOCK_SIZE;
 	block_end = block_start + block->size - 1;
 
-	if (block_state == ALL)
+	if (display_flag == ALL)
 	{
 		if (block->is_free)
 			write(1, GREEN"F"OFF" ", ft_strlen(GREEN""OFF) + 2);
@@ -34,9 +34,11 @@ static void		show_block_infos(t_block *block, t_block_state block_state)
 	ft_putstr(" : ");
 	ft_put_uintmax(block->size, 10);
 	ft_putstr(" bytes\n");
+	if (display_flag == DUMP)
+		show_mem_dump(block_start, block->size);
 }
 
-static size_t	show_blocks(t_zone *zone, t_block_state block_state)
+static size_t	show_blocks(t_zone *zone, t_display_flag display_flag)
 {
 	size_t	total_size;
 	t_block	*block;
@@ -46,20 +48,18 @@ static size_t	show_blocks(t_zone *zone, t_block_state block_state)
 	while (block)
 	{
 		check_data_validity((void*)block, BLOCK);
-		if ((block_state == ALLOC && block->is_free)
-		|| (block_state == FREE && !block->is_free))
+		if (((display_flag == ALLOC || display_flag == DUMP) && !block->is_free)
+		|| (display_flag == FREE && block->is_free) || display_flag == ALL)
 		{
-			block = block->next;
-			continue;
+			show_block_infos(block, display_flag);
+			total_size += block->size;
 		}
-		show_block_infos(block, block_state);
-		total_size += block->size;
 		block = block->next;
 	}
 	return (total_size);
 }
 
-static void		show_zones(t_block_state block_state)
+static void		show_zones(t_display_flag display_flag)
 {
 	size_t	total_size;
 	t_zone 	*zone;
@@ -78,7 +78,7 @@ static void		show_zones(t_block_state block_state)
 			write(1, "LARGE"OFF" : 0x", ft_strlen(OFF) + 10);
 		ft_put_uintmax((size_t)zone, 16);
 		ft_putchar('\n');
-		total_size += show_blocks(zone, block_state);
+		total_size += show_blocks(zone, display_flag);
 		zone = zone->next;
 	}
 	write(1, PURPLE"TOTAL"OFF" : ", ft_strlen(PURPLE""OFF) + 8);
@@ -95,11 +95,11 @@ void			show_alloc_mem(void)
 	pthread_mutex_unlock(&g_alloc.locker);
 }
 
-void			show_mem(t_block_state block_state)
+void			show_mem(t_display_flag display_flag)
 {
 	if (!g_alloc.locker_init)
 		init_locker();
 	pthread_mutex_lock(&g_alloc.locker);
-	show_zones(block_state);
+	show_zones(display_flag);
 	pthread_mutex_unlock(&g_alloc.locker);
 }

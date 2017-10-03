@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/03 12:24:27 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/03 15:40:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@
 
 # define LARGE_RESOLUTION PAGE_SIZE
 
-typedef enum		e_block_state
+typedef enum		e_display_flag
 {
 	ALLOC,
 	FREE,
-	ALL
-}					t_block_state;
+	ALL,
+	DUMP
+}					t_display_flag;
 
 typedef	enum		e_data_type
 {
@@ -104,7 +105,8 @@ void				*realloc(void *ptr, size_t size);
 void				*reallocf(void *ptr, size_t size);
 void				free(void *ptr);
 void				show_alloc_mem(void);
-void				show_mem(t_block_state block_state);
+void				show_mem(t_display_flag display_flag);
+void				show_mem_dump(void *address, size_t size);
 
 void				*malloc_unsafe(size_t size);
 void				*calloc_unsafe(size_t count, size_t size);

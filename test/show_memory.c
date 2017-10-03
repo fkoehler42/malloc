@@ -2,19 +2,22 @@
 
 int main()
 {
-	void	*ptr;
+	int 	i;
+	char	*ptr;
 
+	i = -1;
+	ptr = malloc(24);
 	ptr = malloc(42);
-	ptr = malloc(420);
+	while (++i < 42)
+		ptr[i] = i;
 	ptr = malloc(1024);
-	ptr = malloc(24903);
-	ptr = malloc(9924900);
-
-	ft_printf("\n---show_alloc_mem---\n");
+	ft_putstr("\n---show_alloc_mem---\n");
 	show_alloc_mem();
-	ft_printf("\n---show_free_mem---\n");
+	ft_putstr("\n---show_free_mem---\n");
 	show_mem(FREE);
-	ft_printf("\n---show_all_mem---\n");
+	ft_putstr("\n---show_all_mem---\n");
 	show_mem(ALL);
+	ft_putstr("\n---show_mem_dump---\n");
+	show_mem(DUMP);
 	return 0;
 }
