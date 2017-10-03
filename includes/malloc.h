@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/02 17:11:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/03 12:24:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,16 @@ extern t_alloc		g_alloc;
 void				*malloc(size_t size);
 void				*calloc(size_t count, size_t size);
 void				*realloc(void *ptr, size_t size);
+void				*reallocf(void *ptr, size_t size);
 void				free(void *ptr);
 void				show_alloc_mem(void);
 void				show_mem(t_block_state block_state);
+
+void				*malloc_unsafe(size_t size);
+void				*calloc_unsafe(size_t count, size_t size);
+void				*realloc_unsafe(void *ptr, size_t size, int free);
+void				free_unsafe(void *ptr);
+
 
 void				init_locker(void);
 void				*get_allocated_ptr(size_t size);
