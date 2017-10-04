@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/03 15:40:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/04 20:40:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <ft_printf.h>
 # include <pthread.h>
 
-# define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
+# define debug ft_putnbr(__LINE__);
 
 # define ERROR_OUT_OF_RANGE 0
 # define PAGE_SIZE getpagesize()
@@ -27,13 +27,13 @@
 # define META_BLOCK_SIZE sizeof(t_block)
 # define META_ZONE_SIZE sizeof(t_zone)
 
-# define TINY_SIZE (PAGE_SIZE * 100)
-# define TINY_MAX_ALLOC (PAGE_SIZE / 4) - META_BLOCK_SIZE
+# define TINY_SIZE (PAGE_SIZE * 30)
+# define TINY_MAX_ALLOC (PAGE_SIZE / 16) - META_BLOCK_SIZE
 # define TINY_RESOLUTION 16
 
-# define SMALL_SIZE (PAGE_SIZE * 1700)
-# define SMALL_MAX_ALLOC (PAGE_SIZE * 15) - META_BLOCK_SIZE
-# define SMALL_RESOLUTION 256
+# define SMALL_SIZE (PAGE_SIZE * 600)
+# define SMALL_MAX_ALLOC (PAGE_SIZE * 3) - META_BLOCK_SIZE
+# define SMALL_RESOLUTION 32
 
 # define LARGE_RESOLUTION PAGE_SIZE
 

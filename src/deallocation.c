@@ -74,8 +74,8 @@ int			deallocate_ptr(void *ptr, t_zone *zone)
 		block->is_free = 1;
 		zone->size -= block->size;
 		merge_contiguous_blocks(block, &zone->size);
-		if (zone->block_lst == block && !(zone->block_lst->next))
-			delete_zone(zone);
+		// if (zone->block_lst->is_free && !(zone->block_lst->next))
+		// 	delete_zone(zone);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/09/28 16:19:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/04 20:05:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int 			delete_zone(t_zone *zone)
 			g_alloc.heap->prev = NULL;
 		return (0);
 	}
+	if (next)
+		next->prev = prev;
 	prev->next = next;
-	next->prev = prev;
 	return (0);
 }
