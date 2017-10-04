@@ -6,5 +6,6 @@ int main()
 
 	str = malloc(42);
 	str[0] = 42;
+	show_mem(ALL);
 	return 0;
 }
