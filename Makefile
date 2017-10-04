@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/10/03 15:25:50 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/10/04 16:44:31 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ FLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(LIB) $(O2)
-	@gcc $(FLAGS) $(O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@ -shared
+	@$(CC) $(FLAGS) $(O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@ -shared
 	@echo "\033[0;34m$(NAME) compilation done !\033[0;m"
 	@ln -s $@ $(SYMLINK)
 	@echo "\033[0;34m$(SYMLINK) symbolic link created !\033[0;m"
