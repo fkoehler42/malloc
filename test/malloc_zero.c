@@ -7,14 +7,14 @@ int main()
 	int		i = 0;
 
 	str2 = NULL;
-	str1 = ft_malloc(0);
-	while (i < 23)
+	str1 = malloc(0);
+	while (i < 7)
 	{
 		str1[i] = i + 'a';
 		i++;
 	}
 	str1[i] = 0;
-	str2 = ft_malloc(42);
+	str2 = malloc(42);
 	i = 0;
 	while (i < 41)
 	{
@@ -22,7 +22,8 @@ int main()
 		i++;
 	}
 	str2[i] = 0;
-	show_mem(ALL);
-	printf("str1 : %s\nstr2 : %s\n", str1, str2);
+	show_mem(ALLOC);
+	ft_putstr("str1 : ");
+	ft_putendl(str1);
 	return 0;
 }

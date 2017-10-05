@@ -6,9 +6,9 @@ void	*allocate()
 	char 	*str;
 
 	i = 0;
-	while (i < 100)
+	while (i < 21)
 	{
-		str = malloc(420);
+		str = malloc(12200);
 		str[0] = 42;
 		i++;
 	}
@@ -25,7 +25,7 @@ int 	main()
 	{
 		if (pthread_create(&thread_id, NULL, allocate, NULL) != 0)
 		{
-			ft_printf("Error on thread creation\n");
+			ft_putstr("Error on thread creation\n");
 			exit(1);
 		}
 		i++;
