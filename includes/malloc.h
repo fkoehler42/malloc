@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:10:23 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:37:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <pthread.h>
 
 # define ERROR_OUT_OF_RANGE 0
+# define ERROR_BAD_ADDRESS 0
 # define PAGE_SIZE getpagesize()
 # define MAX_ALLOC_SIZE (size_t)-1 - (2 * PAGE_SIZE)
 # define CANARY(x) (&x + 42)
@@ -113,7 +114,7 @@ void				free_unsafe(void *ptr);
 
 void				init_locker(void);
 void				*get_allocated_ptr(size_t size);
-int					deallocate_ptr(void *ptr, t_zone *zone);
+void				deallocate_ptr(void *ptr, t_zone *zone);
 void				*realloc_process(void *ptr, size_t size, t_zone *zone);
 void				*get_dup_block_ptr(t_block *block, size_t size,
 					size_t to_copy);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 18:31:38 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:47:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void		free_unsafe(void *ptr)
 	if (ptr != NULL)
 	{
 		if ((zone = get_ptr_zone(ptr)) != NULL)
-		{
-			if (deallocate_ptr(ptr, zone) == -1)
-				put_error(NOT_ALLOCATED, ptr);
-		}
+			deallocate_ptr(ptr, zone);
 		else if (ERROR_OUT_OF_RANGE)
 			put_error(NOT_ALLOCATED, ptr);
 	}

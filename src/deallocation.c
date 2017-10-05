@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 11:17:23 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:10:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:43:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			is_valid_block(t_block *block, t_zone *zone)
 {
 	t_block *tmp;
 
-	if (!(tmp = zone->block_lst))
+	if (!(tmp = zone->block_lst) && ERROR_BAD_ADDRESS)
 		put_error(NOT_ALLOCATED, block);
 	while (tmp)
 	{
@@ -47,12 +47,15 @@ int			is_valid_block(t_block *block, t_zone *zone)
 		if (tmp == block)
 		{
 			if (tmp->is_free)
-				put_error(NOT_ALLOCATED, block);
+			{
+				if (ERROR_BAD_ADDRESS)
+					put_error(NOT_ALLOCATED, block);
+				return (0);
+			}
 			return (1);
 		}
 		tmp = tmp->next;
 	}
-	put_error(NOT_ALLOCATED, block);
 	return (0);
 }
 
@@ -82,13 +85,17 @@ t_zone		*get_ptr_zone(void *ptr)
 	return (NULL);
 }
 
-int			deallocate_ptr(void *ptr, t_zone *zone)
+void		deallocate_ptr(void *ptr, t_zone *zone)
 {
 	t_block	*block;
 
 	block = (t_block*)(ptr - META_BLOCK_SIZE);
 	if (!is_valid_block(block, zone))
-		return (-1);
+	{
+		if (ERROR_BAD_ADDRESS)
+			put_error(NOT_ALLOCATED, block);
+		return;
+	}
 	if (zone->type == LARGE)
 		delete_zone(zone);
 	else
@@ -99,5 +106,4 @@ int			deallocate_ptr(void *ptr, t_zone *zone)
 		if (is_zone_free(zone) && count_free_zones(zone->type) > 1)
 			delete_zone(zone);
 	}
-	return (0);
 }
