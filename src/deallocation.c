@@ -6,11 +6,34 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 11:17:23 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/03 15:40:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 14:45:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
+static int	is_zone_free(t_zone *zone)
+{
+	if (zone->block_lst->is_free && !zone->block_lst->next)
+		return (1);
+	return (0);
+}
+
+static int	count_free_zones(t_size_type type)
+{
+	int		i;
+	t_zone	*zone;
+
+	i = 0;
+	zone = g_alloc.heap;
+	while (zone)
+	{
+		if ((!type || zone->type == type) && is_zone_free(zone))
+			i++;
+		zone = zone->next;
+	}
+	return (i);
+}
 
 int			is_valid_block(t_block *block, t_zone *zone)
 {
@@ -74,8 +97,8 @@ int			deallocate_ptr(void *ptr, t_zone *zone)
 		block->is_free = 1;
 		zone->size -= block->size;
 		merge_contiguous_blocks(block, &zone->size);
-		// if (zone->block_lst->is_free && !(zone->block_lst->next))
-		// 	delete_zone(zone);
+		if (is_zone_free(zone) && count_free_zones(zone->type) > 1)
+			delete_zone(zone);
 	}
 	return (0);
 }

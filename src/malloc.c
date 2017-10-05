@@ -75,6 +75,5 @@ void		*malloc_unsafe(size_t size)
 		put_alloc_error(ALLOC_OVERSIZED, size);
 	else
 		ptr = get_allocated_ptr(size);
-	// ft_printf("\n/// ft_malloc debug \\\\\\\nMETA_BLOCK_SIZE : %zu\nMETA_ZONE_SIZE : %zu\nMAX_ALLOC_SIZE : %zu\n", META_BLOCK_SIZE, META_ZONE_SIZE, MAX_ALLOC_SIZE);
 	return (ptr);
 }
