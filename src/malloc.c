@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/03 13:11:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 18:31:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		*calloc_unsafe(size_t count, size_t size)
 	length = count * size;
 	if (!(ptr = malloc_unsafe(length)))
 		return (NULL);
-	return (ft_memset(ptr, 0, length));
+	return (ft_memset(ptr, 0, get_rounded_block_size(length)));
 }
 
 void		*malloc_unsafe(size_t size)
