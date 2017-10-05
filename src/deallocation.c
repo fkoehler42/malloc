@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 11:17:23 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 14:45:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:10:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int			is_valid_block(t_block *block, t_zone *zone)
 	while (tmp)
 	{
 		check_data_validity((void*)tmp, BLOCK);
-		// ft_printf("\nblock data address : %p\n", (void*)tmp + META_BLOCK_SIZE);
 		if (tmp == block)
 		{
 			if (tmp->is_free)

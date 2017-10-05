@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 20:14:40 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/02 20:25:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:11:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ t_block		*split_block(t_block *block, size_t size)
 	split->prev = block;
 	block->size = size;
 	block->next = split;
-	// ft_printf("<-- split block -->\nfree : %p\nnew : %p, canary : %p\n", split, block, block->canary);
 	return (block);
 }
 
@@ -87,7 +86,6 @@ void			merge_contiguous_blocks(t_block *block, size_t *zone_size)
 	while (block->next && block->next->is_free)
 	{
 		check_data_validity((void*)block->next, BLOCK);
-		// ft_printf("\nnext block : %p, is free : %d, size : %zu\n", block->next, block->next->is_free, block->next->size);
 		block->size += block->next->size + META_BLOCK_SIZE;
 		block->next = block->next->next;
 		*zone_size -= META_BLOCK_SIZE;

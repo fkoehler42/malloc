@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 18:21:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:10:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void			*get_allocated_ptr(size_t size)
 	alloc_block = NULL;
 	new_zone = NULL;
 	size = get_rounded_block_size(size);
-	// ft_printf("Rounded block size %zu\n", size);
 	if ((block_type = get_block_type(size)) == LARGE)
 		new_zone = create_zone(size + META_ZONE_SIZE + META_BLOCK_SIZE);
 	else if (!g_alloc.heap

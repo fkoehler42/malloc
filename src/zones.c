@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/04 20:05:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:11:16 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void 		init_zone(t_zone *zone, size_t size)
 	t_block *first_block;
 
 	first_block = (t_block*)((void*)zone + META_ZONE_SIZE);
-	// ft_printf("First block of zone : %p\n", first_block);
 	first_block->canary = CANARY(first_block->canary);
 	first_block->size = size - (META_ZONE_SIZE + META_BLOCK_SIZE);
 	first_block->is_free = 1;
@@ -84,7 +83,6 @@ int 			delete_zone(t_zone *zone)
 		size = zone->size;
 	else
 		size = (zone->type == TINY) ? TINY_SIZE : SMALL_SIZE;
-	// ft_printf("Zone deallocated : %p\n", zone);
 	if (munmap(zone, size) < 0)
 	{
 		put_error(UNMAPPING_FAILED, zone);

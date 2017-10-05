@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:02:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/05 19:10:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <libft.h>
 # include <ft_printf.h>
 # include <pthread.h>
-
-# define debug ft_putnbr(__LINE__);
 
 # define ERROR_OUT_OF_RANGE 0
 # define PAGE_SIZE getpagesize()
@@ -73,7 +71,7 @@ typedef enum		e_errnum
 typedef struct		s_block
 {
 	void			*canary;
-	size_t			size; // block content only (no META)
+	size_t			size;
 	int				is_free;
 	struct s_block	*prev;
 	struct s_block	*next;
@@ -83,7 +81,6 @@ typedef struct		s_zone
 {
 	void			*canary;
 	t_size_type		type;
-// full_blocks * (block->size + META_BLOCK_SIZE) + (free_blocks * META_BLOCK_SIZE) + META_ZONE_SIZE
 	size_t			size;
 	t_block			*block_lst;
 	struct s_zone	*prev;
