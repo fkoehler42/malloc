@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/09 18:10:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 18:44:16 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define ERROR_OUT_OF_RANGE 0
 # define ERROR_BAD_ADDRESS 0
+
 # define PAGE_SIZE getpagesize()
 # define MAX_ALLOC_SIZE (size_t)-1 - (2 * PAGE_SIZE)
 # define CANARY(x) (&x + 42)
@@ -30,7 +31,7 @@
 # define TINY_MAX_ALLOC (PAGE_SIZE / 16) - META_BLOCK_SIZE
 # define TINY_RESOLUTION 8
 
-# define SMALL_SIZE (PAGE_SIZE * 600)
+# define SMALL_SIZE (PAGE_SIZE * 700)
 # define SMALL_MAX_ALLOC (PAGE_SIZE * 3) - META_BLOCK_SIZE
 # define SMALL_RESOLUTION 32
 

@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2017/10/04 16:44:31 by fkoehler         ###   ########.fr        #
+#    Updated: 2017/10/09 18:33:15 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,13 +46,15 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra
 
 # PROCESS
-all: $(NAME)
+all: $(NAME) $(SYMLINK)
+
+$(SYMLINK): $(NAME)
+	@ln -s $(NAME) $(SYMLINK)
+	@echo "\033[0;34m$(SYMLINK) symbolic link created !\033[0;m"
 
 $(NAME): $(LIB) $(O2)
 	@$(CC) $(FLAGS) $(O2) -L $(LIBPATH) -lft -I $(LIBINC) -I $(INC) -o $@ -shared
 	@echo "\033[0;34m$(NAME) compilation done !\033[0;m"
-	@ln -s $@ $(SYMLINK)
-	@echo "\033[0;34m$(SYMLINK) symbolic link created !\033[0;m"
 
 $(LIB):
 	@echo "\033[0;34mWaiting for libft compilation...\033[0;m"
@@ -63,7 +65,7 @@ $(OPATH)%.o: %.c
 
 clean:
 	@rm -f $(O2)
-	@echo "\033[0;34mObject files deleted !\033[0;m"
+	@echo "\033[0;34mLibft_malloc object files deleted !\033[0;m"
 
 fclean: clean
 	@rm -f $(NAME) $(SYMLINK)
