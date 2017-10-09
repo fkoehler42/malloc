@@ -6,15 +6,15 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:37:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 14:47:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# include <libft.h>
-# include <ft_printf.h>
+# include "../libft/includes/libft.h"
+# include "../libft/includes/ft_printf.h"
 # include <pthread.h>
 
 # define ERROR_OUT_OF_RANGE 0
