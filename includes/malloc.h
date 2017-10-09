@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/09 15:13:47 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 18:10:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 # define SMALL_SIZE (PAGE_SIZE * 600)
 # define SMALL_MAX_ALLOC (PAGE_SIZE * 3) - META_BLOCK_SIZE
-# define SMALL_RESOLUTION 16
+# define SMALL_RESOLUTION 32
 
 # define LARGE_RESOLUTION PAGE_SIZE
 
