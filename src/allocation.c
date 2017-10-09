@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:48:00 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:10:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:32:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,9 @@ void			*realloc_process(void *ptr, size_t size, t_zone *zone)
 {
 	t_block		*block;
 	size_t		old_size;
-	size_t 		min_block_size;
+	size_t		min_block_size;
 	t_size_type	realloc_type;
 
-	if (size > MAX_ALLOC_SIZE)
-	{
-		put_alloc_error(ALLOC_OVERSIZED, size);
-		return (NULL);
-	}
 	block = (t_block*)(ptr - META_BLOCK_SIZE);
 	old_size = block->size;
 	size = get_rounded_block_size(size);
@@ -108,7 +103,10 @@ void			*realloc_process(void *ptr, size_t size, t_zone *zone)
 	|| old_size <= min_block_size || (old_size - min_block_size) < size)))
 		return (ptr);
 	if (size < old_size)
-		return ((void*)reduce_block(block, size, &zone->size) + META_BLOCK_SIZE);
+	{
+		return ((void*)reduce_block(block, size, &zone->size)
+		+ META_BLOCK_SIZE);
+	}
 	if ((enlarge_block(block, size, &zone->size, min_block_size) != NULL))
 		return (ptr);
 	return (get_dup_block_ptr(block, size, old_size));

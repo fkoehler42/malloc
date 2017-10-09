@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   multi_thread_malloc.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/09 15:44:04 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/10/09 17:59:56 by fkoehler         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
-void	*allocate()
+void	*allocate(void)
 {
 	int		i;
-	char 	*str;
+	char	*str;
 
 	i = 0;
 	while (i < 21)
 	{
-		str = malloc(12200);
+		str = (char*)malloc(12200);
 		str[0] = 42;
 		i++;
 	}
 	return (NULL);
 }
 
-int 	main()
+int		main(void)
 {
 	int			i;
 	pthread_t	thread_id;

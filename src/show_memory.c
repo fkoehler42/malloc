@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 21:20:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/03 16:44:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:38:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void		show_block_infos(t_block *block, t_display_flag display_flag)
 
 	block_start = (void*)block + META_BLOCK_SIZE;
 	block_end = block_start + block->size - 1;
-
 	if (display_flag == ALL)
 	{
 		if (block->is_free)
@@ -62,7 +61,7 @@ static size_t	show_blocks(t_zone *zone, t_display_flag display_flag)
 static void		show_zones(t_display_flag display_flag)
 {
 	size_t	total_size;
-	t_zone 	*zone;
+	t_zone	*zone;
 
 	total_size = 0;
 	zone = g_alloc.heap;

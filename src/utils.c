@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 17:19:25 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/02 17:20:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:34:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_size_type	get_block_type(size_t size)
 /*
 ** Block metadata included
 */
+
 size_t		get_min_block_size(t_size_type type)
 {
 	size_t	min_alloc;

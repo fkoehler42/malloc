@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:32:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:47:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:31:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void		*realloc_unsafe(void *ptr, size_t size, int free)
 	if ((zone = get_ptr_zone(ptr)) != NULL
 	&& is_valid_block((t_block*)(ptr - META_BLOCK_SIZE), zone))
 	{
-		new_ptr = realloc_process(ptr, size, zone);
+		if (size > MAX_ALLOC_SIZE)
+			put_alloc_error(ALLOC_OVERSIZED, size);
+		else
+			new_ptr = realloc_process(ptr, size, zone);
 		if ((new_ptr != NULL && new_ptr != ptr) || (!new_ptr && free == 1))
 			deallocate_ptr(ptr, zone);
 	}

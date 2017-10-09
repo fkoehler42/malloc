@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 11:17:23 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:43:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:14:33 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		deallocate_ptr(void *ptr, t_zone *zone)
 	{
 		if (ERROR_BAD_ADDRESS)
 			put_error(NOT_ALLOCATED, block);
-		return;
+		return ;
 	}
 	if (zone->type == LARGE)
 		delete_zone(zone);

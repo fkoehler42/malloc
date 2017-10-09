@@ -6,14 +6,14 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:55:35 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:11:16 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:37:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <sys/mman.h>
 
-static void 		init_zone(t_zone *zone, size_t size)
+static void		init_zone(t_zone *zone, size_t size)
 {
 	t_block *first_block;
 
@@ -31,7 +31,7 @@ static void 		init_zone(t_zone *zone, size_t size)
 	zone->next = NULL;
 }
 
-static void			insert_zone_into_list(t_zone *zone)
+static void		insert_zone_into_list(t_zone *zone)
 {
 	t_zone	*tmp;
 
@@ -56,7 +56,7 @@ static void			insert_zone_into_list(t_zone *zone)
 		zone->next->prev = zone;
 }
 
-t_zone				*create_zone(size_t size)
+t_zone			*create_zone(size_t size)
 {
 	t_zone	*new;
 
@@ -71,7 +71,7 @@ t_zone				*create_zone(size_t size)
 	return (new);
 }
 
-int 			delete_zone(t_zone *zone)
+int				delete_zone(t_zone *zone)
 {
 	t_zone	*prev;
 	t_zone	*next;
@@ -90,8 +90,7 @@ int 			delete_zone(t_zone *zone)
 	}
 	if (!prev)
 	{
-		g_alloc.heap = next;
-		if (g_alloc.heap)
+		if ((g_alloc.heap = next))
 			g_alloc.heap->prev = NULL;
 		return (0);
 	}

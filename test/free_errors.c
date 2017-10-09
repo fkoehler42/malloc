@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_errors.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/09 15:41:31 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/10/09 16:47:51 by fkoehler         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
-int main()
+/*
+** Comment the lines to check the different error cases :
+** double free, bad address into/out of mapping range
+*/
+
+int	main(void)
 {
 	char *s;
 
-	s = malloc(42);
+	s = (char*)malloc(42);
 	s[0] = 42;
-
-/*
- ** Comment the lines to check the different error cases :
- ** double free, bad address into/out of mapping range
- */
 	free(s);
 	free(s);
 	free(s + 10);

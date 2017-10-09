@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   realloc_duplicate.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/09 15:47:18 by fkoehler          #+#    #+#             */
+/*   Updated: 2017/10/09 18:00:30 by fkoehler         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
-int main()
+int	main(void)
 {
 	int		i;
 	char	*str1;
 	char	*str2;
 
 	i = 0;
-	str1 = malloc(27);
-	str2 = malloc(12);
+	str1 = (char*)malloc(27);
+	str2 = (char*)malloc(12);
 	ft_putstr("--Memory after malloc of 27 and 12--\n");
 	show_mem(ALL);
 	while (i < 26)
@@ -17,7 +29,7 @@ int main()
 		i++;
 	}
 	str1[i] = 0;
-	str2 = realloc(str1, 42);
+	str2 = (char*)realloc(str1, 42);
 	ft_putstr("\n--Memory after realloc of 42--\n");
 	show_mem(ALL);
 	ft_putstr("str2 = ");

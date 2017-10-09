@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 20:14:40 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/05 19:11:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:14:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_block		*split_block(t_block *block, size_t size)
 	return (block);
 }
 
-void			merge_contiguous_blocks(t_block *block, size_t *zone_size)
+void		merge_contiguous_blocks(t_block *block, size_t *zone_size)
 {
 	while (block->prev && block->prev->is_free)
 	{

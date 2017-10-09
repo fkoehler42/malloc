@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 16:35:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2017/10/09 14:47:05 by fkoehler         ###   ########.fr       */
+/*   Updated: 2017/10/09 15:13:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void				*malloc_unsafe(size_t size);
 void				*calloc_unsafe(size_t count, size_t size);
 void				*realloc_unsafe(void *ptr, size_t size, int free);
 void				free_unsafe(void *ptr);
-
 
 void				init_locker(void);
 void				*get_allocated_ptr(size_t size);
