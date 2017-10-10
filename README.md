@@ -1,6 +1,6 @@
 # Malloc
 
-A personal implementation of the allocation functions from the C standard library. Each function is protected from a multi-thread access.
+A personal implementation of the memory allocation functions from the C standard library. Each function is protected from a multi-thread access.
 
 ## Implemented functions
 
@@ -12,12 +12,6 @@ void	*reallocf(void *ptr, size_t size);
 void	free(void *ptr);
 void	show_mem(t_display_flag flag);
 ```
-
-### Free
-### Realloc
-### Reallocf
-### Calloc
-### Show_mem
 
 ## Usage
 
